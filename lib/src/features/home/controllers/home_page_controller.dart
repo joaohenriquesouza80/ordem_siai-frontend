@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../../shared/routes/app_routes_names.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../user_profile/models/user_profile_model.dart';
+import '../../user_profile/providers/user_profile_provider.dart';
 
 class HomePageController {
   final BuildContext _context;
@@ -43,6 +45,54 @@ class HomePageController {
     Navigator.pushReplacementNamed(
       _context,
       AppRoutesNames.AUTH_HOME,
+    );
+  }
+
+  Future<void> loadProfile() async {
+    try {
+      final userProfileProvider = Provider.of<UserProfileProvider>(
+        _context,
+        listen: false,
+      );
+      if (!userProfileProvider.loaded) {
+        await userProfileProvider.loadProfile();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  UserProfileModel getUserProfile() {
+    final userProfileProvider = Provider.of<UserProfileProvider>(
+      _context,
+      listen: false,
+    );
+    return userProfileProvider.profile;
+  }
+
+  String getUserName() {
+    final userProfileProvider = Provider.of<UserProfileProvider>(
+      _context,
+      listen: false,
+    );
+
+    if (userProfileProvider.profile.name != null &&
+        userProfileProvider.profile.name!.isNotEmpty) {
+      return userProfileProvider.profile.name!;
+    }
+
+    final authProvider = Provider.of<AuthProvider>(
+      _context,
+      listen: false,
+    );
+    return authProvider.authUser!.user.email!.split('@').first;
+  }
+
+  goToUsersPage(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.pushNamed(
+      context,
+      AppRoutesNames.USERS,
     );
   }
 }

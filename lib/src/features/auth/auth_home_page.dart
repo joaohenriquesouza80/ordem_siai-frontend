@@ -1,9 +1,8 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_colors.dart';
+import '../../shared/routes/app_routes_names.dart';
 import '../../shared/widget/text_message/text_message_widget.dart';
 import '../home/controllers/home_page_controller.dart';
 import '../home/home_page.dart';
@@ -26,11 +25,21 @@ class AuthOrHomePage extends StatelessWidget {
       return const AuthPage();
     }
 
+    goToHome() async {
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutesNames.HOME,
+      );
+      // Navigator.pushReplacement(
+      //     context, MaterialPageRoute(builder: (context) => const HomePage()));
+    }
+
     return FutureBuilder(
       future: auth.tryAutoLogin(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SplashPage();
+          //return const SplashPage();
+          return Container();
         } else if (snapshot.error != null) {
           return const Center(
             child: Text('Ocorreu um erro!'),

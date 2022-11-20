@@ -27,6 +27,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   package_info_plus: ^3.0.2
   easy_sidemenu: ^0.4.1
+  extended_image: ^6.3.2
 
 dev_dependencies:
   flutter_test:

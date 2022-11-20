@@ -14,9 +14,9 @@ class SplashPage extends StatelessWidget {
       ),
       child: Center(
         child: Hero(
-          tag: '${AppImages.logo}splash',
+          tag: AppImages.logoPencil,
           child: Image.asset(
-            AppImages.logo,
+            AppImages.logoPencil,
             width: 160,
             height: 160,
           ),

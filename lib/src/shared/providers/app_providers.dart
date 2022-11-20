@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ordem_siai/src/features/users/providers/users_provider.dart';
 import 'package:ordem_siai/src/shared/providers/client_http/client_http_no_auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../features/auth/providers/auth_provider.dart';
+import '../../features/user_profile/providers/user_profile_provider.dart';
 import 'app_info/app_info_provider.dart';
 import 'client_http/client_http_provider.dart';
 import 'local_storage/local_storage_provider.dart';
@@ -23,7 +25,7 @@ class AppProviders extends StatelessWidget {
         Provider(
           create: (_) => LocalStorageProvider(),
         ),
-        Provider(
+        ChangeNotifierProvider(
           create: (context) => AppInfoProvider(),
         ),
         Provider(
@@ -34,6 +36,13 @@ class AppProviders extends StatelessWidget {
         ),
         Provider(
           create: (context) => ClientHttpProvider(context.read(), context),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              UserProfileProvider(context.read(), context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UsersProvider(context.read()),
         ),
       ],
       child: child,

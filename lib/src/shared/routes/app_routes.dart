@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordem_siai/src/features/splash/splash_page.dart';
 
 import '../../features/auth/auth_home_page.dart';
 import '../../features/home/home_page.dart';
@@ -16,7 +17,9 @@ class AppRoutes {
       case AppRoutesNames.AUTH_HOME:
         return _createRouteT(widgetPage: AuthOrHomePage(), duration: 3);
       case AppRoutesNames.HOME:
-        return _createRouteT(widgetPage: const HomePage(), duration: 2);
+        return _createRouteT(widgetPage: const HomePage(), duration: 5);
+      case AppRoutesNames.USERS:
+        return _createRouteT(widgetPage: const SplashPage());
 
       default:
         return _createRouteT(widgetPage: AuthOrHomePage(), duration: 3);
