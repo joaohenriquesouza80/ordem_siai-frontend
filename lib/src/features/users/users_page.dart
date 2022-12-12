@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ordem_siai/src/features/users/controllers/users_controller.dart';
+import 'package:ordem_siai/src/features/users/widgets/users_list_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_colors.dart';
 import '../../shared/widget/progress_indicator/progress_indicator_widget.dart';
+import '../../shared/widget/simple_app_bar/simple_app_bar_widget.dart';
 import '../../shared/widget/text_message/text_message_widget.dart';
 import 'providers/users_provider.dart';
-import 'widgets/users_list_widget.dart';
+import 'widgets/users_list_table_widget.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
@@ -15,8 +17,14 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     UsersController usersController = UsersController(context);
     return Scaffold(
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: SimpleAppBarWidget(
+          title: 'Usuários',
+        ),
+      ),
       body: FutureBuilder(
-        future: usersController.loadUsers(context),
+        future: usersController.loadUsers(),
         builder: (
           BuildContext context,
           AsyncSnapshot<dynamic> snapshot,
@@ -29,7 +37,7 @@ class UsersPage extends StatelessWidget {
           } else if (snapshot.error != null) {
             print(snapshot.error);
             return ListView(
-              children: [
+              children: const [
                 Center(
                   child: TextMessageWidget(
                     message: 'Erro ao carregar Usuários\nTente novamente.',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ordem_siai/src/features/splash/splash_page.dart';
 
 import '../../features/auth/auth_home_page.dart';
 import '../../features/home/home_page.dart';
+import '../../features/splash/splash_page.dart';
 import 'app_routes_names.dart';
 
 class AppRoutes {
@@ -20,7 +20,10 @@ class AppRoutes {
         return _createRouteT(widgetPage: const HomePage(), duration: 5);
       case AppRoutesNames.USERS:
         return _createRouteT(widgetPage: const SplashPage());
-
+      //case AppRoutesNames.PACKAGES:
+      //  return _createRouteT(widgetPage: const PackagesPage());
+      //case AppRoutesNames.INSERT_PACKAGE:
+      //  return _createRouteT(widgetPage: const InsertPackagePage());
       default:
         return _createRouteT(widgetPage: AuthOrHomePage(), duration: 3);
     }

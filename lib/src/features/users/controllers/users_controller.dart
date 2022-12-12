@@ -8,9 +8,9 @@ class UsersController {
 
   UsersController(this._context);
 
-  Future<void> loadUsers(BuildContext context) async {
+  Future<void> loadUsers() async {
     UsersProvider usersProvider = Provider.of(
-      context,
+      _context,
       listen: false,
     );
 

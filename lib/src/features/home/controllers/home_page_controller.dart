@@ -48,13 +48,13 @@ class HomePageController {
     );
   }
 
-  Future<void> loadProfile() async {
+  Future<void> loadProfile(bool forceReload) async {
     try {
       final userProfileProvider = Provider.of<UserProfileProvider>(
         _context,
         listen: false,
       );
-      if (!userProfileProvider.loaded) {
+      if (!userProfileProvider.loaded || forceReload) {
         await userProfileProvider.loadProfile();
       }
     } catch (e) {

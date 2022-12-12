@@ -78,7 +78,7 @@ class InputTextWidget extends StatelessWidget {
         focusedBorderColor = Theme.of(context).colorScheme.primary,
         radiusBorder = 10;
 
-  InputTextWidget.transparent({
+  const InputTextWidget.transparent({
     super.key,
     this.label,
     this.hint,
@@ -135,7 +135,7 @@ class InputTextWidget extends StatelessWidget {
         fillColor: fillColor,
         filled: true,
         labelText: label,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: AppColors.tertiary,
           //_getFocusNode().hasFocus ? AppColors.myWhite : AppColors.tertiary,
         ),

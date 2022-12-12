@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ordem_siai/src/features/assemblages/providers/assemblages_provider.dart';
+import 'package:ordem_siai/src/features/packages/providers/packages_provider.dart';
+import 'package:ordem_siai/src/features/packages/providers/packages_types_provider.dart';
 import 'package:ordem_siai/src/features/users/providers/users_provider.dart';
 import 'package:ordem_siai/src/shared/providers/client_http/client_http_no_auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +45,20 @@ class AppProviders extends StatelessWidget {
               UserProfileProvider(context.read(), context.read()),
         ),
         ChangeNotifierProvider(
-          create: (context) => UsersProvider(context.read()),
+          create: (context) => UsersProvider(
+            context.read(),
+            context.read(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PackagesProvider(context.read(), context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              AssemblagesProvider(context.read(), context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PackagesTypesProvider(context.read()),
         ),
       ],
       child: child,

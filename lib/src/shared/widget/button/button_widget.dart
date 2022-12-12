@@ -54,7 +54,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.myWhite,
         borderColor = Theme.of(context).colorScheme.primary;
 
-  ButtonWidget.secondary({
+  const ButtonWidget.secondary({
     super.key,
     required this.context,
     required this.label,
@@ -88,7 +88,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = fontColor,
         borderColor = backgroundColor;
 
-  ButtonWidget.tertiaryWithoutBords({
+  const ButtonWidget.tertiaryWithoutBords({
     super.key,
     required this.label,
     this.onTap,
@@ -105,7 +105,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.tertiary,
         borderColor = Colors.transparent;
 
-  ButtonWidget.redWithoutBords({
+  const ButtonWidget.redWithoutBords({
     super.key,
     required this.label,
     this.onTap,
@@ -122,7 +122,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.darkRed,
         borderColor = Colors.transparent;
 
-  ButtonWidget.orange({
+  const ButtonWidget.orange({
     super.key,
     required this.label,
     this.onTap,
@@ -139,7 +139,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.myWhite,
         borderColor = AppColors.myWhite;
 
-  ButtonWidget.fullOrange({
+  const ButtonWidget.fullOrange({
     super.key,
     required this.label,
     this.onTap,
@@ -156,7 +156,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.myWhite,
         borderColor = AppColors.orange;
 
-  ButtonWidget.whiteWithoutBords({
+  const ButtonWidget.whiteWithoutBords({
     super.key,
     required this.label,
     this.onTap,
@@ -173,7 +173,7 @@ class ButtonWidget extends StatelessWidget {
         iconColor = AppColors.myWhite,
         borderColor = Colors.transparent;
 
-  ButtonWidget.orangeWithoutBords({
+  const ButtonWidget.orangeWithoutBords({
     super.key,
     required this.label,
     this.onTap,

@@ -6,7 +6,7 @@ class AppTheme {
     var themeData = ThemeData(
       //primarySwatch: Colors.blue,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0Xcc88f3),
+        seedColor: const Color(0Xffcc88f3),
         secondary: const Color(0xFFCCCD43),
       ),
       textTheme: GoogleFonts.poppinsTextTheme(

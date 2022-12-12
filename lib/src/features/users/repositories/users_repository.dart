@@ -1,31 +1,24 @@
-import 'dart:convert';
+import 'package:ordem_siai/src/features/user_profile/repositories/user_profile_repository.dart';
+import 'package:ordem_siai/src/features/users/models/insert_user_and_profile_model.dart';
+import 'package:ordem_siai/src/features/users/repositories/implementations/users_repository_fake.dart';
 
-import 'package:ordem_siai/src/shared/providers/client_http/client_http_provider.dart';
-
-import '../../../shared/exceptions/http_response_exceptions.dart';
-import '../../../shared/providers/client_http/models/client_http_response_model.dart';
+import '../../../shared/providers/client_http/client_http_provider.dart';
+import '../../auth/providers/auth_provider.dart';
 import '../models/users_models.dart';
+//import 'implementations/users_repository_impl.dart';
 
-class UsersRepository {
-  final ClientHttpProvider clientHttpProvider;
+abstract class UsersRepository {
+  Future<List<UsersModel>> getUsers();
+  Future<UsersModel> insertUser(InsertUseAndProfileModel useAndProfileModel);
+  Future<UsersModel> getUser(String userId);
 
-  UsersRepository(this.clientHttpProvider);
-
-  Future<List<UsersModel>> getUsers() async {
-    const method = "/users";
-
-    final ClientHttpResponseModel responseHttp = await clientHttpProvider.get(
-      method: method,
-      withToken: true,
+  factory UsersRepository(
+    ClientHttpProvider clientHttpProvider,
+    AuthProvider authProvider,
+  ) {
+    //return UsersRepositoryImpl(clientHttpProvider, authProvider);
+    return UsersRepositoryFake(
+      authProvider,
     );
-
-    if (responseHttp.statusCode == 200) {
-      final list =
-          jsonDecode(responseHttp.responseData).cast<Map<String, dynamic>>();
-      return list.map<UsersModel>((item) => UsersModel.fromMap(item)).toList();
-    }
-
-    HttpResponseExceptions(responseHttp).toString();
-    return Future.value([]);
   }
 }

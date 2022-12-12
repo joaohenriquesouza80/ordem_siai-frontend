@@ -39,8 +39,8 @@ class LoadingIndicatorWidget extends StatelessWidget {
   }
 
   Widget _getHeading(context) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 4),
+    return const Padding(
+        padding: EdgeInsets.only(bottom: 4),
         child: Text(
           'Por favor aguarde …',
           style: TextStyle(
@@ -54,7 +54,7 @@ class LoadingIndicatorWidget extends StatelessWidget {
   Text _getText(String displayedText) {
     return Text(
       displayedText,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.myWhite,
         fontSize: 14,
       ),

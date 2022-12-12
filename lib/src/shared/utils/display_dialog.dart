@@ -26,7 +26,7 @@ class DisplayDialog {
             style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 14,
-                color: Theme.of(context).primaryTextTheme.caption?.color),
+                color: Theme.of(context).colorScheme.tertiary),
           ),
           actions: [
             icon != null

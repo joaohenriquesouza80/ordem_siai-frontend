@@ -15,7 +15,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController pageController = PageController();
+  PageController pageController = PageController(keepPage: false);
+  late final HomePageController homePageController2;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      homePageController2 = HomePageController(context);
+
+      setState(() {
+        _init();
+      });
+    });
+  }
+
+  _init() async {
+    await homePageController2.loadProfile(true);
+  }
 
   @override
   Widget build(BuildContext context) {

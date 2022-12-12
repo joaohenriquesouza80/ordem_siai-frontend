@@ -59,7 +59,7 @@ class AuthOrHomePage extends StatelessWidget {
                           return RefreshIndicator(
                             onRefresh: homePageController.startProcess,
                             child: ListView(
-                              children: [
+                              children: const [
                                 Center(
                                   child: TextMessageWidget(
                                     message:

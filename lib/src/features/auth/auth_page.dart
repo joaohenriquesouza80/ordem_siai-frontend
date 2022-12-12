@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../core/app_colors.dart';
 import '../../core/app_images.dart';
-import '../../shared/routes/app_routes_names.dart';
 import '../../shared/utils/display_dialog.dart';
 import '../../shared/widget/button/button_widget.dart';
 import '../../shared/widget/input_text/input_text_widget.dart';
@@ -186,7 +183,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
         ],
       ),
-      bottomNavigationBar: SafeArea(
+      /*bottomNavigationBar: SafeArea(
         bottom: true,
         child: SizedBox(
           width: 200,
@@ -201,7 +198,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
         ),
-      ),
+      ),*/
     );
   }
 }

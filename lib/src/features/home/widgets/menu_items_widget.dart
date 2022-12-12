@@ -1,7 +1,11 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:ordem_siai/src/features/home/controllers/home_page_controller.dart';
+import 'package:ordem_siai/src/features/packages/insert_package_page.dart';
+import 'package:ordem_siai/src/features/packages/packages_page.dart';
 import 'package:ordem_siai/src/features/users/users_page.dart';
+
+import '../../packages/detail_package_page.dart';
 
 class MenuItemsWidget {
   const MenuItemsWidget();
@@ -28,7 +32,7 @@ class MenuItemsWidget {
       ),
       SideMenuItem(
         priority: 1,
-        title: 'Iniciação',
+        title: 'Pacotes',
         onTap: () {
           pageController.jumpToPage(1);
         },
@@ -79,7 +83,7 @@ class MenuItemsWidget {
         icon: const Icon(Icons.campaign_rounded),
       ),
       SideMenuItem(
-        priority: 6,
+        priority: 1000,
         title: 'Sair',
         icon: const Icon(Icons.exit_to_app),
         onTap: () {
@@ -107,11 +111,8 @@ class MenuItemsWidget {
         // ),
         Container(
           color: Colors.white,
-          child: const Center(
-            child: Text(
-              'INICIAÇÃO - Em Construção',
-              style: TextStyle(fontSize: 35),
-            ),
+          child: PackagesPage(
+            pageController: pageController,
           ),
         ),
         Container(
@@ -148,6 +149,20 @@ class MenuItemsWidget {
               'NOTÍCIAS - Em Construção',
               style: TextStyle(fontSize: 35),
             ),
+          ),
+        ),
+
+        Container(
+          color: Colors.white,
+          child: InsertPackagePage(
+            pageController: pageController,
+          ),
+        ),
+
+        Container(
+          color: Colors.white,
+          child: DetailPackagePage(
+            pageController: pageController,
           ),
         ),
       ],

@@ -42,7 +42,7 @@ class ClientHttpDio implements ClientHttpProvider {
     if (_timezone.isEmpty) {
       final timeZone = Provider.of<TimeZoneProvider>(_context, listen: false);
       _timezone = await timeZone.getLocalTimeZone();
-      print('TimeZone Recovered: ' + _timezone);
+      print('TimeZone Recovered: $_timezone');
     }
 
     _client.options.headers["time_zone"] = _timezone;

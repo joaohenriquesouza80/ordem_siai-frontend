@@ -11,7 +11,7 @@ class LocalStorageProviderSharedPreferences implements LocalStorageProvider {
       final pref = await SharedPreferences.getInstance();
       final bool deleted = await pref.remove(key);
       if (!deleted) {
-        throw ('Erro ao excluir localmente a key: ' + key);
+        throw ('Erro ao excluir localmente a key: $key');
       }
     } catch (err) {
       print(err);
@@ -36,7 +36,7 @@ class LocalStorageProviderSharedPreferences implements LocalStorageProvider {
       final pref = await SharedPreferences.getInstance();
       final bool saved = await pref.setString(key, value);
       if (!saved) {
-        throw ('Erro ao salvar localmente a key: ' + key);
+        throw ('Erro ao salvar localmente a key: $key');
       }
     } catch (err) {
       print(err);

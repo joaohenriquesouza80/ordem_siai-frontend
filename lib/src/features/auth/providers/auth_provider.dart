@@ -26,6 +26,7 @@ class AuthProvider with ChangeNotifier {
 
   static AuthenticatedUserModel? _authUser;
   AuthenticatedUserModel? get authUser => _authUser;
+
   String getUserName({bool tryFromEmail = true}) {
     String userName = _authUser!.userName;
     if (userName.isEmpty && tryFromEmail) {
@@ -90,7 +91,9 @@ class AuthProvider with ChangeNotifier {
       _logoutTimer!.cancel();
     }
     if (isAuth) {
-      DateTime expirationDate = JwtDecoder.getExpirationDate(_authUser!.token);
+      DateTime expirationDate = _repository.isMock()
+          ? DateTime.now().add(const Duration(days: 5))
+          : JwtDecoder.getExpirationDate(_authUser!.token);
 
       final timeToLogout = expirationDate.difference(DateTime.now()).inSeconds;
       _logoutTimer = Timer(Duration(seconds: timeToLogout), logout);
@@ -110,7 +113,8 @@ class AuthProvider with ChangeNotifier {
       if (result.isEmpty) return;
 
       final tempAuth = AuthenticatedUserModel.fromJson(result);
-      bool hasExpired = JwtDecoder.isExpired(tempAuth.token);
+      bool hasExpired =
+          _repository.isMock() ? false : JwtDecoder.isExpired(tempAuth.token);
 
       if (hasExpired) {
         await _localStorageProvider.deleteStorage(

@@ -11,7 +11,7 @@ class AppWidget extends StatelessWidget {
   AppWidget({super.key});
 
   Future<void> init(BuildContext context) async {
-    print("Initializing App...");
+    debugPrint("Initializing App...");
     //Future.delayed(const Duration(seconds: 10), () {
     //  print("1 second has passed");
     //});
