@@ -162,7 +162,7 @@ class _DetailPackageUserListWidgetState
                         : Container(),
                     widget.item.presence_user != null
                         ? Text(
-                            widget.item.user!.email!,
+                            widget.item.presence_user!.email!,
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 8,
