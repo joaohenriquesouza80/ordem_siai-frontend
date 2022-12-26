@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ordem_siai/src/features/assemblages/models/assemblage_mode.dart';
 import 'package:ordem_siai/src/features/packages/models/package_type_model.dart';
+import 'package:ordem_siai/src/features/user_profile/models/user_profile_model.dart';
+import 'package:ordem_siai/src/features/users/models/users_profile_model.dart';
 import 'package:ordem_siai/src/shared/widget/button/button_widget.dart';
 import 'package:provider/provider.dart';
 import '../../core/app_colors.dart';
@@ -56,14 +58,18 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _packagesController = PackagesController(
-        context,
-        widget.pageController,
-      );
-
-      _packagesController.loadAllAssemblages();
-      _packagesController.loadAllPackagesTypes();
+      _init();
     });
+  }
+
+  _init() async {
+    _packagesController = PackagesController(
+      context,
+      widget.pageController,
+    );
+
+    await _packagesController.loadAllAssemblages();
+    await _packagesController.loadAllPackagesTypes();
   }
 
   _insertPackage() {
@@ -201,7 +207,7 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                               items: provider.assemblages.map(
                                 (assemblage) {
                                   String assemblageOrder =
-                                      "${assemblage.name} (Ordem: ${assemblage.order!.name!})";
+                                      "${assemblage.name} (Ordem: ${assemblage.order?.name})";
                                   return DropdownMenuItem<AssemblageModel>(
                                     key: Key(assemblage.id!),
                                     value: assemblage,
@@ -299,19 +305,34 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
 
                           return userChecked;
                         }).toList();
+
+                        for (var i = 0; i < checkedUsers.length; i++) {
+                          var el = checkedUsers[i];
+                          el.UserProfile ??= UsersProfileModel();
+                          el.UserProfile?.name = el.UserProfile?.name == null
+                              ? 'Não Informado'
+                              : el.UserProfile?.name!;
+                        }
+
                         checkedUsers.sort((a, b) => a.UserProfile!.name!
-                            .compareTo(b.UserProfile!.name!));
+                            .toUpperCase()
+                            .compareTo(b.UserProfile!.name!.toUpperCase()));
 
                         return SizedBox(
                           //width: 500,
                           child: Wrap(
-                              children: checkedUsers
-                                  .map(
-                                    (e) => InsertPackageUserListWidget(
-                                      item: e,
-                                    ),
-                                  )
-                                  .toList()),
+                            children: checkedUsers
+                                .where(
+                                  (e) => ((e.UserProfile != null) &&
+                                      (e.UserProfile!.order != null)),
+                                )
+                                .map(
+                                  (e) => InsertPackageUserListWidget(
+                                    item: e,
+                                  ),
+                                )
+                                .toList(),
+                          ),
                         );
                       },
                     ),

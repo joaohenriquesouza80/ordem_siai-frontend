@@ -15,10 +15,10 @@ class AssemblagesProvider with ChangeNotifier {
   List<AssemblageModel> _assemblages = [];
   List<AssemblageModel> get assemblages => [..._assemblages];
 
-  Future<void> loadAllAssemblages() async {
+  Future<void> loadAllAssemblages(String orderId) async {
     _assemblages = [];
 
-    _assemblages = await repository.getAllAssemblages();
+    _assemblages = await repository.getAllAssemblages(orderId);
 
     notifyListeners();
   }

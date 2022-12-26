@@ -49,6 +49,7 @@ class _MenuHeaderWidgetState extends State<MenuHeaderWidget> {
                       child: ImageBoxCachedWidget(
                         imageUrl: provider.profile.avatar_url ?? "",
                         imageAssetDefault: AppImages.defaultUserAvatar,
+                        dynamicStringToAvatar: provider.profile.user_id,
                       ),
                     ),
                   ),

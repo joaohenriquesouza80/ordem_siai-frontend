@@ -3,6 +3,7 @@ import 'package:ordem_siai/src/features/auth/repositories/implementations/auth_r
 import '../../../shared/providers/client_http/client_http_no_auth_provider.dart';
 import '../models/authenticated_user_model.dart';
 import '../models/user_model.dart';
+import 'implementations/auth_repository_impl.dart';
 
 abstract class AuthRepository {
   bool isMock();
@@ -15,7 +16,7 @@ abstract class AuthRepository {
   Future<UserModel> signUpUser(String email, String password);
 
   factory AuthRepository(ClientHttpNoAuthProvider clientHttpNoAuthProvider) {
-    //return AuthRepositoryImpl(clientHttpNoAuthProvider);
-    return AuthRepositoryFake();
+    return AuthRepositoryImpl(clientHttpNoAuthProvider);
+    //return AuthRepositoryFake();
   }
 }

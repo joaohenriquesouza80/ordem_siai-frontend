@@ -40,13 +40,36 @@ class UsersRepositoryImpl implements UsersRepository {
   @override
   Future<UsersModel> insertUser(
       InsertUseAndProfileModel useAndProfileModel) async {
-    // TODO: implement insertUser
-    throw UnimplementedError();
+    const method = "/users";
+
+    final ClientHttpResponseModel responseHttp = await clientHttpProvider.post(
+      method: method,
+      withToken: true,
+      jsonData: useAndProfileModel.toJson(),
+    );
+
+    if (responseHttp.statusCode == 201) {
+      return UsersModel.fromJson(responseHttp.responseData);
+    }
+
+    HttpResponseExceptions(responseHttp).toString();
+    return Future.value(null);
   }
 
   @override
-  Future<UsersModel> getUser(String userId) {
-    // TODO: implement getUser
-    throw UnimplementedError();
+  Future<UsersModel> getUser(String userId) async {
+    var method = "/users/$userId";
+
+    final ClientHttpResponseModel responseHttp = await clientHttpProvider.get(
+      method: method,
+      withToken: true,
+    );
+
+    if (responseHttp.statusCode == 200) {
+      return UsersModel.fromJson(responseHttp.responseData);
+    }
+
+    HttpResponseExceptions(responseHttp).toString();
+    return Future.value(null);
   }
 }

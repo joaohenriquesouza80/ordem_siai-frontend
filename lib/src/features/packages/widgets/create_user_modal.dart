@@ -34,6 +34,7 @@ class _CreateUserModalState extends State<CreateUserModal> {
       email: _emailController.text,
       name: _nameController.text,
       assemblage_id: widget.assemblage.id!,
+      password: _emailController.text.split('@')[0],
     );
 
     widget.handleInsertNewUser(user);

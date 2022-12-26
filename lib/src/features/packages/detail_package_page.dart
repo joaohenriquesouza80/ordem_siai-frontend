@@ -75,27 +75,28 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
     }
 
     UsersModel? authUser = await _packagesController.getAuthenticateUser();
-    setState(
-      () {
-        switch (index) {
-          case 0:
-            _packageDetail.status = 'approved';
-            break;
-          case 1:
-            _packageDetail.status = 'unapproved';
-            break;
-          default:
-            _packageDetail.status = 'waiting';
-        }
 
-        _packageDetail.approve_user = null;
-        _packageDetail.approve_date = null;
-        if (authUser != null) {
-          _packageDetail.approve_user = authUser;
-          _packageDetail.approve_date = DateTime.now();
-        }
-      },
-    );
+    switch (index) {
+      case 0:
+        _packageDetail.status = 'approved';
+        break;
+      case 1:
+        _packageDetail.status = 'unapproved';
+        break;
+      default:
+        _packageDetail.status = 'waiting';
+    }
+
+    _packageDetail.approve_user = null;
+    _packageDetail.approve_date = null;
+    if (authUser != null) {
+      _packageDetail.approve_user = authUser;
+      _packageDetail.approve_date = DateTime.now();
+    }
+
+    setState(() {});
+
+    await _packagesController.updatePackageStatus(_packageDetail);
   }
 
   @override

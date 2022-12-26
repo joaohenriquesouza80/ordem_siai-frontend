@@ -44,7 +44,8 @@ class AppWidget extends StatelessWidget {
               title: 'SIAI',
               //home: const HomePage(),
               initialRoute: _appRoutes.initialRoute,
-              onGenerateRoute: _appRoutes.doGenerateRoutes,
+              //onGenerateRoute: _appRoutes.doGenerateRoutes,
+              routes: _appRoutes.getRoutes(context),
             ),
           );
         }

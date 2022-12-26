@@ -81,7 +81,7 @@ class PackageUsersModel {
           ? UsersModel.fromMap(map['presence_user'])
           : null,
       presence_date: map['presence_date'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['presence_date'])
+          ? DateTime.tryParse(map['presence_date'])
           : null,
       presence_comments: map['presence_comments'],
     );

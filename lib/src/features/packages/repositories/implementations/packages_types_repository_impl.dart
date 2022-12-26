@@ -13,7 +13,7 @@ class PackagesTypesRepositoryImpl implements PackagesTypesRepository {
 
   @override
   Future<List<PackageTypeModel>> getAllPackagesTypes() async {
-    const method = "/packages_types";
+    const method = "/packages/types";
 
     final ClientHttpResponseModel responseHttp = await clientHttpProvider.get(
       method: method,

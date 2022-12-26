@@ -70,7 +70,7 @@ class AssemblageModel {
       id: map['id'],
       name: map['name'],
       foundation_date: map['foundation_date'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['foundation_date'])
+          ? DateTime.tryParse(map['foundation_date'])
           : null,
       picture: map['picture'],
       status: map['status'],

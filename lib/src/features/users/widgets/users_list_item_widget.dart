@@ -36,6 +36,7 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                   borderRadius: BorderRadius.circular(50),
                   child: ImageBoxCachedWidget(
                     imageUrl: widget.user.UserProfile?.user_avatar_url,
+                    dynamicStringToAvatar: widget.user.id,
                   ),
                 ),
               ),

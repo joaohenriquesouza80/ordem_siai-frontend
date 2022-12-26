@@ -5,6 +5,7 @@ import 'package:ordem_siai/src/features/users/repositories/implementations/users
 import '../../../shared/providers/client_http/client_http_provider.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../models/users_models.dart';
+import 'implementations/users_repository_impl.dart';
 //import 'implementations/users_repository_impl.dart';
 
 abstract class UsersRepository {
@@ -16,9 +17,7 @@ abstract class UsersRepository {
     ClientHttpProvider clientHttpProvider,
     AuthProvider authProvider,
   ) {
-    //return UsersRepositoryImpl(clientHttpProvider, authProvider);
-    return UsersRepositoryFake(
-      authProvider,
-    );
+    return UsersRepositoryImpl(clientHttpProvider, authProvider);
+    //return UsersRepositoryFake(authProvider);
   }
 }

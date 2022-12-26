@@ -8,7 +8,6 @@ import '../../shared/widget/progress_indicator/progress_indicator_widget.dart';
 import '../../shared/widget/simple_app_bar/simple_app_bar_widget.dart';
 import '../../shared/widget/text_message/text_message_widget.dart';
 import 'providers/users_provider.dart';
-import 'widgets/users_list_table_widget.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});

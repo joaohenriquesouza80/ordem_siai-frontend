@@ -26,7 +26,9 @@ class _InsertPackageUserListWidgetState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            widget.item.UserProfile!.name!,
+            widget.item.UserProfile == null
+                ? '-'
+                : widget.item.UserProfile!.name!,
             style: GoogleFonts.notoSans(
               fontWeight: FontWeight.normal,
               fontSize: 12,
@@ -35,7 +37,9 @@ class _InsertPackageUserListWidgetState
           ),
           const Spacer(),
           Text(
-            "${widget.item.UserProfile?.assemblage?.name ?? ""} (Ordem: ${widget.item.UserProfile?.order?.name ?? ""})",
+            widget.item.UserProfile == null
+                ? '-'
+                : "${widget.item.UserProfile?.assemblage?.name ?? ""} (Ordem: ${widget.item.UserProfile?.order?.name ?? ""})",
             style: GoogleFonts.notoSans(
               fontWeight: FontWeight.normal,
               fontSize: 12,

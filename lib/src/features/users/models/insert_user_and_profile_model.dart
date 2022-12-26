@@ -6,22 +6,26 @@ class InsertUseAndProfileModel {
   final String email;
   final String name;
   final String assemblage_id;
+  final String password;
 
   InsertUseAndProfileModel({
     required this.email,
     required this.name,
     required this.assemblage_id,
+    required this.password,
   });
 
   InsertUseAndProfileModel copyWith({
     String? email,
     String? name,
     String? assemblage_id,
+    String? password,
   }) {
     return InsertUseAndProfileModel(
       email: email ?? this.email,
       name: name ?? this.name,
       assemblage_id: assemblage_id ?? this.assemblage_id,
+      password: password ?? this.password,
     );
   }
 
@@ -31,6 +35,7 @@ class InsertUseAndProfileModel {
     result.addAll({'email': email});
     result.addAll({'name': name});
     result.addAll({'assemblage_id': assemblage_id});
+    result.addAll({'password': password});
 
     return result;
   }
@@ -40,6 +45,7 @@ class InsertUseAndProfileModel {
       email: map['email'] ?? '',
       name: map['name'] ?? '',
       assemblage_id: map['assemblage_id'] ?? '',
+      password: map['password'] ?? '',
     );
   }
 
@@ -49,8 +55,9 @@ class InsertUseAndProfileModel {
       InsertUseAndProfileModel.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'InsertUseAndProfileModel(email: $email, name: $name, assemblage_id: $assemblage_id)';
+  String toString() {
+    return 'InsertUseAndProfileModel(email: $email, name: $name, assemblage_id: $assemblage_id, password: $password)';
+  }
 
   @override
   bool operator ==(Object other) {
@@ -59,9 +66,15 @@ class InsertUseAndProfileModel {
     return other is InsertUseAndProfileModel &&
         other.email == email &&
         other.name == name &&
-        other.assemblage_id == assemblage_id;
+        other.assemblage_id == assemblage_id &&
+        other.password == password;
   }
 
   @override
-  int get hashCode => email.hashCode ^ name.hashCode ^ assemblage_id.hashCode;
+  int get hashCode {
+    return email.hashCode ^
+        name.hashCode ^
+        assemblage_id.hashCode ^
+        password.hashCode;
+  }
 }

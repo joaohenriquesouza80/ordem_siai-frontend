@@ -3,6 +3,7 @@ import 'dart:io';
 import '../../../shared/providers/client_http/client_http_provider.dart';
 import '../models/user_profile_model.dart';
 import 'implementations/user_profile_repository_fake.dart';
+import 'implementations/user_profile_repository_impl.dart';
 //import 'implementations/user_profile_repository_impl.dart';
 
 abstract class UserProfileRepository {
@@ -27,7 +28,7 @@ abstract class UserProfileRepository {
   });
 
   factory UserProfileRepository(ClientHttpProvider clientHttpProvider) {
-    //return UserProfileRepositoryImpl(clientHttpProvider);
-    return UserProfileRepositoryFake();
+    return UserProfileRepositoryImpl(clientHttpProvider);
+    //return UserProfileRepositoryFake();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordem_siai/src/features/packages/packages_page.dart';
 
 import '../../features/auth/auth_home_page.dart';
 import '../../features/home/home_page.dart';
@@ -9,6 +10,13 @@ class AppRoutes {
   Object? _args;
 
   get initialRoute => AppRoutesNames.AUTH_HOME;
+
+  getRoutes(BuildContext context) {
+    return {
+      '/': (context) => AuthOrHomePage(),
+      '/packages': (context) => PackagesPage(pageController: PageController()),
+    };
+  }
 
   Route? doGenerateRoutes(RouteSettings settings) {
     _args = settings.arguments;

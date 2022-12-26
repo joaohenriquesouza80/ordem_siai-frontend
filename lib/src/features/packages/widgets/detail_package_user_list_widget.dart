@@ -55,27 +55,29 @@ class _DetailPackageUserListWidgetState
 
     UsersModel? authUser =
         await widget.packagesController.getAuthenticateUser();
-    setState(
-      () {
-        switch (index) {
-          case 0:
-            widget.item.is_presence = true;
-            break;
-          case 1:
-            widget.item.is_presence = false;
-            break;
-          default:
-            widget.item.is_presence = null;
-        }
 
-        widget.item.presence_user = null;
-        widget.item.presence_date = null;
-        if (authUser != null) {
-          widget.item.presence_user = authUser;
-          widget.item.presence_date = DateTime.now();
-        }
-      },
-    );
+    switch (index) {
+      case 0:
+        widget.item.is_presence = true;
+        break;
+      case 1:
+        widget.item.is_presence = false;
+        break;
+      default:
+        widget.item.is_presence = null;
+    }
+
+    widget.item.presence_user = null;
+    widget.item.presence_date = null;
+    if (authUser != null) {
+      widget.item.presence_user = authUser;
+      widget.item.presence_date = DateTime.now();
+    }
+
+    setState(() {});
+
+    await widget.packagesController
+        .updatePackageUserPresenceStatus(widget.item);
   }
 
   @override
@@ -87,7 +89,9 @@ class _DetailPackageUserListWidgetState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.item.user!.UserProfile!.name!,
+              widget.item.user!.UserProfile == null
+                  ? '-'
+                  : widget.item.user!.UserProfile!.name ?? '-',
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -96,7 +100,9 @@ class _DetailPackageUserListWidgetState
             ),
             const Spacer(),
             Text(
-              "${widget.item.user!.UserProfile?.assemblage?.name ?? ""} (Ordem: ${widget.item.user!.UserProfile?.order?.name ?? ""})",
+              widget.item.user!.UserProfile == null
+                  ? '-'
+                  : "${widget.item.user!.UserProfile?.assemblage?.name ?? ""} (Ordem: ${widget.item.user!.UserProfile?.order?.name ?? ""})",
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,

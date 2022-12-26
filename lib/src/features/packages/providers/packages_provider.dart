@@ -53,4 +53,13 @@ class PackagesProvider with ChangeNotifier {
 
     loadAllPackages();
   }
+
+  Future<void> updatePackageStatus({required PackageModel package}) async {
+    await packagesRepository.updatePackageStatus(package);
+  }
+
+  updatePackageUserPresenceStatus(
+      {required PackageUsersModel packageUser}) async {
+    await packagesRepository.updatePackageUserPresenceStatus(packageUser);
+  }
 }

@@ -6,12 +6,14 @@ import 'users_profile_assemblage_model.dart';
 import 'users_profile_order_model.dart';
 
 class UsersProfileModel {
+  String? id;
   String? name;
   String? user_avatar_url;
   UsersProfileAssemblageModel? assemblage;
   UsersProfileOrderModel? order;
 
   UsersProfileModel({
+    this.id,
     this.name,
     this.user_avatar_url,
     this.assemblage,
@@ -19,12 +21,14 @@ class UsersProfileModel {
   });
 
   UsersProfileModel copyWith({
+    String? id,
     String? name,
     String? user_avatar_url,
     UsersProfileAssemblageModel? assemblage,
     UsersProfileOrderModel? order,
   }) {
     return UsersProfileModel(
+      id: id ?? this.id,
       name: name ?? this.name,
       user_avatar_url: user_avatar_url ?? this.user_avatar_url,
       assemblage: assemblage ?? this.assemblage,
@@ -35,6 +39,9 @@ class UsersProfileModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    if (id != null) {
+      result.addAll({'id': id});
+    }
     if (name != null) {
       result.addAll({'name': name});
     }
@@ -53,6 +60,7 @@ class UsersProfileModel {
 
   factory UsersProfileModel.fromMap(Map<String, dynamic> map) {
     return UsersProfileModel(
+      id: map['id'],
       name: map['name'],
       user_avatar_url: map['user_avatar_url'],
       assemblage: map['assemblage'] != null
@@ -71,7 +79,7 @@ class UsersProfileModel {
 
   @override
   String toString() {
-    return 'UsersProfileModel(name: $name, user_avatar_url: $user_avatar_url, assemblage: $assemblage, order: $order)';
+    return 'UsersProfileModel(id: $id, name: $name, user_avatar_url: $user_avatar_url, assemblage: $assemblage, order: $order)';
   }
 
   @override
@@ -79,6 +87,7 @@ class UsersProfileModel {
     if (identical(this, other)) return true;
 
     return other is UsersProfileModel &&
+        other.id == id &&
         other.name == name &&
         other.user_avatar_url == user_avatar_url &&
         other.assemblage == assemblage &&
@@ -87,7 +96,8 @@ class UsersProfileModel {
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return id.hashCode ^
+        name.hashCode ^
         user_avatar_url.hashCode ^
         assemblage.hashCode ^
         order.hashCode;

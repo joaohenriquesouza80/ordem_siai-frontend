@@ -8,6 +8,7 @@ class ImageBoxCachedWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final String? imageAssetDefault;
+  final String? dynamicStringToAvatar;
 
   const ImageBoxCachedWidget({
     Key? key,
@@ -15,6 +16,7 @@ class ImageBoxCachedWidget extends StatelessWidget {
     this.width,
     this.height,
     this.imageAssetDefault,
+    this.dynamicStringToAvatar,
   }) : super(key: key);
 
   @override
@@ -42,9 +44,21 @@ class ImageBoxCachedWidget extends StatelessWidget {
       );
     }
 
-    return imageUrl != null && imageUrl!.isNotEmpty
+    getImageUrl() {
+      String result = "";
+      if (imageUrl != null && imageUrl!.isNotEmpty) {
+        result = imageUrl!;
+      }
+      if (dynamicStringToAvatar != null && dynamicStringToAvatar!.isNotEmpty) {
+        result = '';
+        //'https://robohash.org/${dynamicStringToAvatar!.replaceAll(RegExp('[^A-Za-z0-9]'), '')}?set=set1&bgset=bg2&size=30x30';
+      }
+      return result;
+    }
+
+    return getImageUrl().trim().isNotEmpty
         ? ExtendedImage.network(
-            imageUrl!,
+            getImageUrl(),
             //cacheKey: imageUrl,
             key: key ?? ValueKey(imageUrl!),
             width: width,
@@ -52,7 +66,7 @@ class ImageBoxCachedWidget extends StatelessWidget {
             fit: BoxFit.fill,
             cache: true,
             retries: 3,
-            timeRetry: const Duration(milliseconds: 100),
+            timeRetry: const Duration(milliseconds: 1000),
             enableLoadState: true,
             loadStateChanged: (state) {
               switch (state.extendedImageLoadState) {
@@ -60,7 +74,7 @@ class ImageBoxCachedWidget extends StatelessWidget {
                   return getImageAsset();
                 case LoadState.completed:
                   var widget = ExtendedRawImage(
-                    image: state.extendedImageInfo?.image,
+                    image: state.extendedImageInfo!.image,
                     width: width,
                     height: height,
                     fit: BoxFit.fill,

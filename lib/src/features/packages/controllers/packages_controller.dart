@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:ordem_siai/src/features/assemblages/models/assemblage_mode.dart';
 import 'package:ordem_siai/src/features/assemblages/providers/assemblages_provider.dart';
-import 'package:ordem_siai/src/features/auth/models/authenticated_user_model.dart';
-import 'package:ordem_siai/src/features/auth/models/user_model.dart';
 import 'package:ordem_siai/src/features/packages/models/package_model.dart';
 import 'package:ordem_siai/src/features/packages/models/package_type_model.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +41,7 @@ class PackagesController {
       listen: false,
     );
     try {
-      await usersProvider.insertUserAndProfile(user);
+      await usersProvider.insertUser(user);
     } catch (e) {
       DisplayDialog.showDialogAsync(
         _context,
@@ -73,28 +71,37 @@ class PackagesController {
       listen: false,
     );
 
-    UsersModel authUser = await usersProvider.getUser(
-      authProvider.authUser!.user.id!,
-    );
+    try {
+      UsersModel authUser = await usersProvider.getUser(
+        authProvider.authUser!.user.id!,
+      );
 
-    List<UsersModel> listUsers = usersProvider.users;
+      List<UsersModel> listUsers = usersProvider.users;
 
-    await packagesProvider.insertPackage(
-      eventDateTime: eventDateTime,
-      assemblage: assemblage,
-      packageType: packageType,
-      createdUser: authUser,
-      packageUsers: checkedUsers.map(
-        (e) {
-          int i = listUsers.indexWhere((e2) => e2.id == e.id);
-          return PackageUsersModel(
-            user: listUsers[i],
-          );
-        },
-      ).toList(),
-    );
+      await packagesProvider.insertPackage(
+        eventDateTime: eventDateTime,
+        assemblage: assemblage,
+        packageType: packageType,
+        createdUser: authUser,
+        packageUsers: checkedUsers.map(
+          (e) {
+            int i = listUsers.indexWhere((e2) => e2.id == e.id);
+            return PackageUsersModel(
+              user: listUsers[i],
+            );
+          },
+        ).toList(),
+      );
 
-    pageController.jumpToPage(1);
+      pageController.jumpToPage(1);
+    } catch (e) {
+      DisplayDialog.showDialogAsync(
+        _context,
+        "Erro na Inclusão do Novo Pacote",
+        e.toString(),
+        FeatherIcons.frown,
+      );
+    }
   }
 
   Future<void> loadAllPackages() async {
@@ -112,7 +119,19 @@ class PackagesController {
       listen: false,
     );
 
-    await assemblagesProvider.loadAllAssemblages();
+    AuthProvider authProvider = Provider.of(
+      _context,
+      listen: false,
+    );
+
+    UsersProvider usersProvider = Provider.of(
+      _context,
+      listen: false,
+    );
+    UsersModel user =
+        await usersProvider.getUser(authProvider.authUser!.user.id!);
+
+    await assemblagesProvider.loadAllAssemblages(user.UserProfile!.order!.id!);
   }
 
   Future<void> loadAllPackagesTypes() async {
@@ -157,19 +176,70 @@ class PackagesController {
   }
 
   Future<bool> canUpdateUserPresenceStatus() async {
-    UsersModel? authUser = await getAuthenticateUser();
+    return true;
+
+    //MOCK
+    /*UsersModel? authUser = await getAuthenticateUser();
     String value = authUser!.email!.split('@')[0];
     return (value.contains('0') ||
         value.contains('9') ||
         value.contains('8') ||
         value.contains('7') ||
         value.contains('6') ||
-        value.contains('5'));
+        value.contains('5'));*/
   }
 
   Future<bool> canUpdatePackageStatus() async {
     UsersModel? authUser = await getAuthenticateUser();
-    String value = authUser!.email!.split('@')[0];
-    return (value.contains('0'));
+
+    //MOCK
+    //String value = authUser!.email!.split('@')[0];
+    //return (value.contains('0'));
+
+    if ((authUser!.UserProfile == null) ||
+        (authUser.UserProfile!.assemblage != null)) {
+      return false;
+    }
+    return true;
+  }
+
+  updatePackageStatus(PackageModel packageModel) async {
+    PackagesProvider packagesProvider = Provider.of(
+      _context,
+      listen: false,
+    );
+
+    try {
+      await packagesProvider.updatePackageStatus(
+        package: packageModel,
+      );
+    } catch (e) {
+      DisplayDialog.showDialogAsync(
+        _context,
+        "Erro na Atualização no Status do Pacote",
+        e.toString(),
+        FeatherIcons.frown,
+      );
+    }
+  }
+
+  updatePackageUserPresenceStatus(PackageUsersModel packageUser) async {
+    PackagesProvider packagesProvider = Provider.of(
+      _context,
+      listen: false,
+    );
+
+    try {
+      await packagesProvider.updatePackageUserPresenceStatus(
+        packageUser: packageUser,
+      );
+    } catch (e) {
+      DisplayDialog.showDialogAsync(
+        _context,
+        "Erro na Atualização na Presença do Usuário",
+        e.toString(),
+        FeatherIcons.frown,
+      );
+    }
   }
 }

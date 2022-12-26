@@ -11,7 +11,7 @@ class AssemblagesRepositoryFake implements AssemblagesRepository {
   AssemblagesRepositoryFake(this.authProvider);
 
   @override
-  Future<List<AssemblageModel>> getAllAssemblages() async {
+  Future<List<AssemblageModel>> getAllAssemblages(String orderId) async {
     List<AssemblageModel> assemblages = RepositoriesMocks.getMockAssemblages(5);
 
     assemblages.sort(

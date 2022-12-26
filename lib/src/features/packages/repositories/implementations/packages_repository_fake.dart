@@ -1,3 +1,5 @@
+import 'package:ordem_siai/src/features/packages/models/package_users_model.dart';
+
 import '../../../../shared/mocks/repositories_mock.dart';
 import '../../../auth/models/user_model.dart';
 import '../../../auth/providers/auth_provider.dart';
@@ -51,5 +53,17 @@ class PackagesRepositoryFake implements PackagesRepository {
     );
 
     return Future.value(newPackage);
+  }
+
+  @override
+  Future<void> updatePackageStatus(PackageModel package) {
+    // TODO: implement updatePackageStatus
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updatePackageUserPresenceStatus(PackageUsersModel packageUser) {
+    // TODO: implement updatePackageUserPresenceStatus
+    throw UnimplementedError();
   }
 }

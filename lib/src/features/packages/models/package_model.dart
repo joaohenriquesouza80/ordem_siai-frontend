@@ -103,19 +103,19 @@ class PackageModel {
     return PackageModel(
       id: map['id'],
       event_date_time: map['event_date_time'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['event_date_time'])
+          ? DateTime.tryParse(map['event_date_time'])
           : null,
       creator_user: map['creator_user'] != null
           ? UsersModel.fromMap(map['creator_user'])
           : null,
       created_at: map['created_at'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['created_at'])
+          ? DateTime.tryParse(map['created_at'])
           : null,
       approve_user: map['approve_user'] != null
           ? UsersModel.fromMap(map['approve_user'])
           : null,
       approve_date: map['approve_date'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['approve_date'])
+          ? DateTime.tryParse(map['approve_date'])
           : null,
       package_type: map['package_type'] != null
           ? PackageTypeModel.fromMap(map['package_type'])

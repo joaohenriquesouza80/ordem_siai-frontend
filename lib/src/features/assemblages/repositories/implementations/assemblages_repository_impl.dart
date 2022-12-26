@@ -12,8 +12,8 @@ class AssemblagesRepositoryImpl implements AssemblagesRepository {
   AssemblagesRepositoryImpl(this.clientHttpProvider);
 
   @override
-  Future<List<AssemblageModel>> getAllAssemblages() async {
-    const method = "/assemblages";
+  Future<List<AssemblageModel>> getAllAssemblages(String orderId) async {
+    var method = "/orders/$orderId/assemblages";
 
     final ClientHttpResponseModel responseHttp = await clientHttpProvider.get(
       method: method,

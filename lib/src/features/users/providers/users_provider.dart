@@ -31,7 +31,7 @@ class UsersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> insertUserAndProfile(
+  Future<void> insertUser(
     InsertUseAndProfileModel useAndProfileModel,
   ) async {
     await _repository.insertUser(useAndProfileModel);
