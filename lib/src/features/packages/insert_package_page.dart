@@ -25,7 +25,7 @@ import 'widgets/create_user_modal.dart';
 import 'widgets/insert_package_user_list_widget.dart';
 
 class InsertPackagePage extends StatefulWidget {
-  final PageController pageController;
+  final PageController? pageController;
 
   const InsertPackagePage({
     super.key,
@@ -56,10 +56,10 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
 
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _init();
     });
+    super.initState();
   }
 
   _init() async {
@@ -68,8 +68,9 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
       widget.pageController,
     );
 
-    await _packagesController.loadAllAssemblages();
     await _packagesController.loadAllPackagesTypes();
+    await _packagesController.loadAllAssemblages();
+    await _packagesController.loadUsers();
   }
 
   _insertPackage() {
@@ -207,9 +208,9 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                               items: provider.assemblages.map(
                                 (assemblage) {
                                   String assemblageOrder =
-                                      "${assemblage.name} (Ordem: ${assemblage.order?.name})";
+                                      "${assemblage.ass_nome} (Ordem: ${assemblage.ordem?.ord_name})";
                                   return DropdownMenuItem<AssemblageModel>(
-                                    key: Key(assemblage.id!),
+                                    key: Key(assemblage.ass_uuid!),
                                     value: assemblage,
                                     child: Text(
                                       assemblageOrder,
@@ -267,10 +268,10 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                               items: provider.packagesTypes.map(
                                 (packageType) {
                                   return DropdownMenuItem<PackageTypeModel>(
-                                    key: Key(packageType.id!),
+                                    key: Key(packageType.tip_pac_uuid!),
                                     value: packageType,
                                     child: Text(
-                                      packageType.package_name!,
+                                      packageType.tip_pac_nome!,
                                       style: GoogleFonts.notoSans(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -299,32 +300,34 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                         checkedUsers = provider.users.map((e) {
                           var userChecked =
                               InsertPackageSelectedEmailModel(false);
-                          userChecked.id = e.id;
-                          userChecked.email = e.email;
-                          userChecked.UserProfile = e.UserProfile;
+                          userChecked.usu_uuid = e.usu_uuid;
+                          userChecked.usu_nome = e.usu_nome;
+                          userChecked.usu_email = e.usu_email;
+                          userChecked.perfil = e.perfil;
+                          userChecked.assembleia = e.assembleia;
 
                           return userChecked;
                         }).toList();
 
                         for (var i = 0; i < checkedUsers.length; i++) {
                           var el = checkedUsers[i];
-                          el.UserProfile ??= UsersProfileModel();
-                          el.UserProfile?.name = el.UserProfile?.name == null
+                          el.perfil ??= UsersProfileModel();
+                          el.usu_nome = el.usu_nome == null
                               ? 'Não Informado'
-                              : el.UserProfile?.name!;
+                              : el.usu_nome!;
                         }
 
-                        checkedUsers.sort((a, b) => a.UserProfile!.name!
+                        checkedUsers.sort((a, b) => a.usu_nome!
                             .toUpperCase()
-                            .compareTo(b.UserProfile!.name!.toUpperCase()));
+                            .compareTo(b.usu_nome!.toUpperCase()));
 
                         return SizedBox(
                           //width: 500,
                           child: Wrap(
                             children: checkedUsers
                                 .where(
-                                  (e) => ((e.UserProfile != null) &&
-                                      (e.UserProfile!.order != null)),
+                                  (e) => ((e.assembleia != null) &&
+                                      (e.assembleia!.ordem != null)),
                                 )
                                 .map(
                                   (e) => InsertPackageUserListWidget(
@@ -336,7 +339,7 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                         );
                       },
                     ),
-                    SizedBox(
+                    /*SizedBox(
                       width: 500,
                       child: ButtonWidget.secondary(
                         context: context,
@@ -361,7 +364,7 @@ class _InsertPackagePageState extends State<InsertPackagePage> {
                                   )
                                 },
                       ),
-                    )
+                    )*/
                   ],
                 )
               ],

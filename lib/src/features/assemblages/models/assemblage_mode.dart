@@ -5,61 +5,61 @@ import 'dart:convert';
 import '../../orders/models/order_model.dart';
 
 class AssemblageModel {
-  String? id;
-  String? name;
-  DateTime? foundation_date;
-  String? picture;
-  String? status;
-  OrderModel? order;
+  String? ass_uuid;
+  String? ass_nome;
+  DateTime? ass_dt_fundacao;
+  String? ass_foto;
+  String? ass_status;
+  OrderModel? ordem;
 
   AssemblageModel({
-    this.id,
-    this.name,
-    this.foundation_date,
-    this.picture,
-    this.status,
-    this.order,
+    this.ass_uuid,
+    this.ass_nome,
+    this.ass_dt_fundacao,
+    this.ass_foto,
+    this.ass_status,
+    this.ordem,
   });
 
   AssemblageModel copyWith({
-    String? id,
-    String? name,
-    DateTime? foundation_date,
-    String? picture,
-    String? status,
-    OrderModel? order,
+    String? ass_uuid,
+    String? ass_nome,
+    DateTime? ass_dt_fundacao,
+    String? ass_foto,
+    String? ass_status,
+    OrderModel? ordem,
   }) {
     return AssemblageModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      foundation_date: foundation_date ?? this.foundation_date,
-      picture: picture ?? this.picture,
-      status: status ?? this.status,
-      order: order ?? this.order,
+      ass_uuid: ass_uuid ?? this.ass_uuid,
+      ass_nome: ass_nome ?? this.ass_nome,
+      ass_dt_fundacao: ass_dt_fundacao ?? this.ass_dt_fundacao,
+      ass_foto: ass_foto ?? this.ass_foto,
+      ass_status: ass_status ?? this.ass_status,
+      ordem: ordem ?? this.ordem,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (id != null) {
-      result.addAll({'id': id});
+    if (ass_uuid != null) {
+      result.addAll({'ass_uuid': ass_uuid});
     }
-    if (name != null) {
-      result.addAll({'name': name});
+    if (ass_nome != null) {
+      result.addAll({'ass_nome': ass_nome});
     }
-    if (foundation_date != null) {
+    if (ass_dt_fundacao != null) {
       result
-          .addAll({'foundation_date': foundation_date!.millisecondsSinceEpoch});
+          .addAll({'ass_dt_fundacao': ass_dt_fundacao!.millisecondsSinceEpoch});
     }
-    if (picture != null) {
-      result.addAll({'picture': picture});
+    if (ass_foto != null) {
+      result.addAll({'ass_foto': ass_foto});
     }
-    if (status != null) {
-      result.addAll({'status': status});
+    if (ass_status != null) {
+      result.addAll({'ass_status': ass_status});
     }
-    if (order != null) {
-      result.addAll({'order': order!.toMap()});
+    if (ordem != null) {
+      result.addAll({'ordem': ordem!.toMap()});
     }
 
     return result;
@@ -67,14 +67,14 @@ class AssemblageModel {
 
   factory AssemblageModel.fromMap(Map<String, dynamic> map) {
     return AssemblageModel(
-      id: map['id'],
-      name: map['name'],
-      foundation_date: map['foundation_date'] != null
-          ? DateTime.tryParse(map['foundation_date'])
+      ass_uuid: map['ass_uuid'],
+      ass_nome: map['ass_nome'],
+      ass_dt_fundacao: map['ass_dt_fundacao'] != null
+          ? DateTime.tryParse(map['ass_dt_fundacao'])
           : null,
-      picture: map['picture'],
-      status: map['status'],
-      order: map['order'] != null ? OrderModel.fromMap(map['order']) : null,
+      ass_foto: map['ass_foto'],
+      ass_status: map['ass_status'],
+      ordem: map['ordem'] != null ? OrderModel.fromMap(map['ordem']) : null,
     );
   }
 
@@ -85,7 +85,7 @@ class AssemblageModel {
 
   @override
   String toString() {
-    return 'AssemblageModel(id: $id, name: $name, foundation_date: $foundation_date, picture: $picture, status: $status, order: $order)';
+    return 'AssemblageModel(ass_uuid: $ass_uuid, ass_nome: $ass_nome, ass_dt_fundacao: $ass_dt_fundacao, ass_foto: $ass_foto, ass_status: $ass_status, ordem: $ordem)';
   }
 
   @override
@@ -93,21 +93,21 @@ class AssemblageModel {
     if (identical(this, other)) return true;
 
     return other is AssemblageModel &&
-        other.id == id &&
-        other.name == name &&
-        other.foundation_date == foundation_date &&
-        other.picture == picture &&
-        other.status == status &&
-        other.order == order;
+        other.ass_uuid == ass_uuid &&
+        other.ass_nome == ass_nome &&
+        other.ass_dt_fundacao == ass_dt_fundacao &&
+        other.ass_foto == ass_foto &&
+        other.ass_status == ass_status &&
+        other.ordem == ordem;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        foundation_date.hashCode ^
-        picture.hashCode ^
-        status.hashCode ^
-        order.hashCode;
+    return ass_uuid.hashCode ^
+        ass_nome.hashCode ^
+        ass_dt_fundacao.hashCode ^
+        ass_foto.hashCode ^
+        ass_status.hashCode ^
+        ordem.hashCode;
   }
 }

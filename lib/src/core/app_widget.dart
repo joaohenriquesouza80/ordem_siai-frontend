@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ordem_siai/src/features/packages/packages_page.dart';
 import '../features/splash/splash_page.dart';
 import '../shared/providers/app_providers.dart';
 import '../shared/routes/app_routes.dart';
@@ -7,8 +8,9 @@ import 'app_theme.dart';
 
 class AppWidget extends StatelessWidget {
   final AppRoutes _appRoutes = AppRoutes();
+  final String? queryParam;
 
-  AppWidget({super.key});
+  AppWidget({super.key, this.queryParam});
 
   Future<void> init(BuildContext context) async {
     debugPrint("Initializing App...");
@@ -42,10 +44,12 @@ class AppWidget extends StatelessWidget {
               supportedLocales: const [Locale('pt', 'BR')],
               debugShowCheckedModeBanner: false,
               title: 'SIAI',
-              //home: const HomePage(),
-              initialRoute: _appRoutes.initialRoute,
+              //home: const PackagesPage(
+              //  pageController: null,
+              //),
+              //initialRoute: _appRoutes.initialRoute,
               //onGenerateRoute: _appRoutes.doGenerateRoutes,
-              routes: _appRoutes.getRoutes(context),
+              routes: _appRoutes.getRoutes(context, queryParam),
             ),
           );
         }

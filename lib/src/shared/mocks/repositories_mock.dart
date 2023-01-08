@@ -10,9 +10,7 @@ import '../../features/packages/models/package_model.dart';
 import '../../features/packages/models/package_type_model.dart';
 import '../../features/user_profile/models/user_profile_model.dart';
 import '../../features/users/models/insert_user_and_profile_model.dart';
-import '../../features/users/models/users_profile_assemblage_model.dart';
 import '../../features/users/models/users_profile_model.dart';
-import '../../features/users/models/users_profile_order_model.dart';
 
 class RepositoriesMocks {
   static final List<OrderModel> _listOrders = [];
@@ -31,8 +29,8 @@ class RepositoriesMocks {
     for (int i = 0; i < size; i++) {
       _listOrders.add(
         OrderModel(
-          id: RndX.genUUID(),
-          name: RndX.generateRandomCity().toString().toUpperCase(),
+          ord_uuid: RndX.genUUID(),
+          ord_name: RndX.generateRandomCity().toString().toUpperCase(),
         ),
       );
     }
@@ -53,12 +51,12 @@ class RepositoriesMocks {
       String orderName = RndX.generateRandomCity();
       _listAssemblages.add(
         AssemblageModel(
-          id: RndX.genUUID(),
-          name: orderName,
-          foundation_date: RndX.generateRandomDates(count: 1),
-          order: ordersList[random.nextInt(ordersList.length)],
-          picture: RndX.getRandomAvatarUrl(email: orderName),
-          status: "active",
+          ass_uuid: RndX.genUUID(),
+          ass_nome: orderName,
+          ass_dt_fundacao: RndX.generateRandomDates(count: 1),
+          ordem: ordersList[random.nextInt(ordersList.length)],
+          ass_foto: RndX.getRandomAvatarUrl(email: orderName),
+          ass_status: "active",
         ),
       );
     }
@@ -73,20 +71,20 @@ class RepositoriesMocks {
 
     _listPackagesTypes.add(
       PackageTypeModel(
-        id: RndX.genUUID(),
-        package_name: 'Iniciação',
+        tip_pac_uuid: RndX.genUUID(),
+        tip_pac_nome: 'Iniciação',
       ),
     );
     _listPackagesTypes.add(
       PackageTypeModel(
-        id: RndX.genUUID(),
-        package_name: 'Honraria 1',
+        tip_pac_uuid: RndX.genUUID(),
+        tip_pac_nome: 'Honraria 1',
       ),
     );
     _listPackagesTypes.add(
       PackageTypeModel(
-        id: RndX.genUUID(),
-        package_name: 'Honraria 2',
+        tip_pac_uuid: RndX.genUUID(),
+        tip_pac_nome: 'Honraria 2',
       ),
     );
 
@@ -107,12 +105,12 @@ class RepositoriesMocks {
     for (int i = 0; i < size; i++) {
       _listPackageModel.add(
         PackageModel(
-            id: RndX.genUUID(),
-            event_date_time: RndX.randomDateByAge(age: 0),
-            assemblage: assemblageList[random.nextInt(assemblageList.length)],
-            status: "waiting",
+            pac_uuid: RndX.genUUID(),
+            pac_dt_evento: RndX.randomDateByAge(age: 0),
+            assembleia: assemblageList[random.nextInt(assemblageList.length)],
+            pac_status: "waiting",
             //packagesStatusList[random.nextInt(packagesStatusList.length)],
-            package_type:
+            tipo_pacote:
                 packagesTypesList[random.nextInt(packagesTypesList.length)]),
       );
     }
@@ -143,26 +141,22 @@ class RepositoriesMocks {
 
     _listFullUsersModel.add(
       UsersModel(
-        id: user.id,
-        email: user.email,
-        UserProfile: UsersProfileModel(
-          name: userProfile.name,
-          user_avatar_url: userProfile.avatar_url,
-          order: UsersProfileOrderModel(
-            id: assemblage.order!.id,
-            name: assemblage.order!.name,
-          ),
-          assemblage: user.email!.contains("0")
-              ? null
-              : UsersProfileAssemblageModel(
-                  id: assemblage.id,
-                  name: assemblage.name,
-                  foundation_date: assemblage.foundation_date,
-                  order_id: assemblage.order!.id,
-                  picture: assemblage.picture,
-                  status: assemblage.status,
-                ),
+        usu_uuid: user.id,
+        usu_email: user.email,
+        usu_nome: '',
+        perfil: UsersProfileModel(
+          per_nome: userProfile.name,
         ),
+        assembleia: user.email!.contains("0")
+            ? null
+            : AssemblageModel(
+                ass_uuid: assemblage.ass_uuid,
+                ass_nome: assemblage.ass_nome,
+                ass_dt_fundacao: assemblage.ass_dt_fundacao,
+                ordem: assemblage.ordem!,
+                ass_foto: assemblage.ass_foto,
+                ass_status: assemblage.ass_status,
+              ),
       ),
     );
   }
@@ -210,7 +204,7 @@ class RepositoriesMocks {
 
     getMockAssemblages(3);
     var index = _listAssemblages.indexWhere(
-      (e) => e.id == useAndProfileModel.assemblage_id,
+      (e) => e.ass_uuid == useAndProfileModel.assemblage_id,
     );
     AssemblageModel assemblage;
     if (index < 0) {
@@ -220,23 +214,18 @@ class RepositoriesMocks {
     }
 
     UsersModel newUser = UsersModel(
-      id: user.id,
-      email: user.email,
-      UserProfile: UsersProfileModel(
-        name: userProfile.name,
-        user_avatar_url: userProfile.avatar_url,
-        order: UsersProfileOrderModel(
-          id: assemblage.order!.id,
-          name: assemblage.order!.name,
-        ),
-        assemblage: UsersProfileAssemblageModel(
-          id: assemblage.id,
-          name: assemblage.name,
-          foundation_date: assemblage.foundation_date,
-          order_id: assemblage.order!.id,
-          picture: assemblage.picture,
-          status: assemblage.status,
-        ),
+      usu_uuid: user.id,
+      usu_email: user.email,
+      perfil: UsersProfileModel(
+        per_nome: userProfile.name,
+      ),
+      assembleia: AssemblageModel(
+        ass_uuid: assemblage.ass_uuid,
+        ass_nome: assemblage.ass_nome,
+        ass_dt_fundacao: assemblage.ass_dt_fundacao,
+        ordem: assemblage.ordem!,
+        ass_foto: assemblage.ass_foto,
+        ass_status: assemblage.ass_status,
       ),
     );
 
@@ -250,19 +239,21 @@ class RepositoriesMocks {
   }) {
     String packageId = RndX.genUUID();
     PackageModel newPackage = PackageModel(
-        id: packageId,
-        event_date_time: package.event_date_time,
-        package_type: package.package_type,
-        status: 'waiting',
-        assemblage: package.assemblage,
-        creator_user: package.creator_user,
-        created_at: package.created_at,
-        package_users: package.package_users!.map(
+        pac_uuid: packageId,
+        pac_dt_evento: package.pac_dt_evento,
+        tipo_pacote: package.tipo_pacote,
+        pac_status: 'waiting',
+        assembleia: package.assembleia,
+        usuario_pacote_usu_id_criacao_fkTousuario:
+            package.usuario_pacote_usu_id_criacao_fkTousuario,
+        pac_dt_criacao: package.pac_dt_criacao,
+        rel_pacote_usuario: package.rel_pacote_usuario!.map(
           (e) {
             return PackageUsersModel(
-              id: RndX.genUUID(),
-              package_id: packageId,
-              user: e.user,
+              rel_pac_usu_uuid: RndX.genUUID(),
+              //package_id: packageId,
+              usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario:
+                  e.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario,
             );
           },
         ).toList());

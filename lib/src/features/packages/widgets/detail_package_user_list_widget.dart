@@ -43,7 +43,8 @@ class _DetailPackageUserListWidgetState
       return;
     }
 
-    if (widget.package.status == null || widget.package.status != 'approved') {
+    if (widget.package.pac_status == null ||
+        widget.package.pac_status != 'approved') {
       await DisplayDialog.showDialogAsync(
         context,
         "Pacote não esta aprovado",
@@ -58,20 +59,21 @@ class _DetailPackageUserListWidgetState
 
     switch (index) {
       case 0:
-        widget.item.is_presence = true;
+        widget.item.rel_pac_usu_presenca = true;
         break;
       case 1:
-        widget.item.is_presence = false;
+        widget.item.rel_pac_usu_presenca = false;
         break;
       default:
-        widget.item.is_presence = null;
+        widget.item.rel_pac_usu_presenca = null;
     }
 
-    widget.item.presence_user = null;
-    widget.item.presence_date = null;
+    widget.item.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario = null;
+    widget.item.rel_pac_usu_dt_presenca = null;
     if (authUser != null) {
-      widget.item.presence_user = authUser;
-      widget.item.presence_date = DateTime.now();
+      widget.item.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario =
+          authUser;
+      widget.item.rel_pac_usu_dt_presenca = DateTime.now();
     }
 
     setState(() {});
@@ -89,9 +91,15 @@ class _DetailPackageUserListWidgetState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.item.user!.UserProfile == null
+              widget.item.usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!
+                          .usu_nome ==
+                      null
                   ? '-'
-                  : widget.item.user!.UserProfile!.name ?? '-',
+                  : widget
+                          .item
+                          .usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!
+                          .usu_nome ??
+                      '-',
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -100,9 +108,11 @@ class _DetailPackageUserListWidgetState
             ),
             const Spacer(),
             Text(
-              widget.item.user!.UserProfile == null
+              widget.item.usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!
+                          .assembleia ==
+                      null
                   ? '-'
-                  : "${widget.item.user!.UserProfile?.assemblage?.name ?? ""} (Ordem: ${widget.item.user!.UserProfile?.order?.name ?? ""})",
+                  : "${widget.item.usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!.assembleia?.ass_nome ?? ""} (Ordem: ${widget.item.usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!.assembleia?.ordem?.ord_name ?? ""})",
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -111,7 +121,9 @@ class _DetailPackageUserListWidgetState
             ),
             const Spacer(),
             Text(
-              widget.item.user!.email!,
+              widget.item.usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!
+                      .usu_email ??
+                  '-',
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -146,8 +158,8 @@ class _DetailPackageUserListWidgetState
                           minWidth: 80.0,
                         ),
                         isSelected: [
-                          widget.item.is_presence == true,
-                          widget.item.is_presence == false,
+                          widget.item.rel_pac_usu_presenca == true,
+                          widget.item.rel_pac_usu_presenca == false,
                         ],
                         children: _getPossiblePresence(),
                       ),
@@ -157,31 +169,37 @@ class _DetailPackageUserListWidgetState
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    widget.item.presence_user != null
+                    widget.item.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario !=
+                            null
                         ? Text(
-                            'Presença informada por: ${widget.item.presence_user!.UserProfile!.name!}',
+                            'Presença informada por: ${widget.item.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario!.usu_nome}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 8,
                                 color: AppColors.myBlack),
                           )
                         : Container(),
-                    widget.item.presence_user != null
+                    widget.item.usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario !=
+                            null
                         ? Text(
-                            widget.item.presence_user!.email!,
+                            widget
+                                    .item
+                                    .usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario!
+                                    .usu_email ??
+                                '-',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 8,
                                 color: AppColors.myBlack),
                           )
                         : Container(),
-                    widget.item.presence_date != null
+                    widget.item.rel_pac_usu_dt_presenca != null
                         ? Text(
                             'Em: ${DateFormat(
                               'dd/MM/yyyy HH:mm:ss',
                               'pt_Br',
                             ).format(
-                              widget.item.presence_date!,
+                              widget.item.rel_pac_usu_dt_presenca!,
                             )}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,

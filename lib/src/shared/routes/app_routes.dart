@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ordem_siai/src/features/packages/detail_package_page.dart';
 import 'package:ordem_siai/src/features/packages/packages_page.dart';
 
 import '../../features/auth/auth_home_page.dart';
 import '../../features/home/home_page.dart';
+import '../../features/packages/insert_package_page.dart';
 import '../../features/splash/splash_page.dart';
 import 'app_routes_names.dart';
 
@@ -11,10 +13,19 @@ class AppRoutes {
 
   get initialRoute => AppRoutesNames.AUTH_HOME;
 
-  getRoutes(BuildContext context) {
+  getRoutes(BuildContext context, String? queryParam) {
     return {
-      '/': (context) => AuthOrHomePage(),
-      '/packages': (context) => PackagesPage(pageController: PageController()),
+      //'/': (context) => AuthOrHomePage(),
+      '/': (context) => PackagesPage(
+            pageController: null,
+            queryParam: queryParam,
+          ),
+      '/packages/insert': (context) => const InsertPackagePage(
+            pageController: null,
+          ),
+      '/packages/detail': (context) => const DetailPackagePage(
+            pageController: null,
+          ),
     };
   }
 

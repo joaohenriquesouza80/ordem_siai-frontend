@@ -15,7 +15,7 @@ class AssemblagesRepositoryFake implements AssemblagesRepository {
     List<AssemblageModel> assemblages = RepositoriesMocks.getMockAssemblages(5);
 
     assemblages.sort(
-      (a, b) => a.name!.toUpperCase().compareTo(b.name!.toUpperCase()),
+      (a, b) => a.ass_nome!.toUpperCase().compareTo(b.ass_nome!.toUpperCase()),
     );
 
     List<UsersModel> usersModel = RepositoriesMocks.getMockFullUsers();
@@ -23,7 +23,7 @@ class AssemblagesRepositoryFake implements AssemblagesRepository {
     String userId = authProvider.authUser!.user.id!;
 
     final index = usersModel.indexWhere(
-      (u) => u.id == userId,
+      (u) => u.usu_uuid == userId,
     );
 
     if (index < 0) {
@@ -32,11 +32,11 @@ class AssemblagesRepositoryFake implements AssemblagesRepository {
 
     UsersModel user = usersModel[index];
 
-    if (user.UserProfile?.assemblage == null) {
+    if (user.assembleia == null) {
       return assemblages;
     }
     return assemblages
-        .where((e) => e.id == user.UserProfile?.assemblage?.id)
+        .where((e) => e.ass_uuid == user.assembleia?.ass_uuid)
         .toList();
   }
 }

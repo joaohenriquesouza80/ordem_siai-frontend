@@ -33,7 +33,7 @@ class _CreateUserModalState extends State<CreateUserModal> {
     InsertUseAndProfileModel user = InsertUseAndProfileModel(
       email: _emailController.text,
       name: _nameController.text,
-      assemblage_id: widget.assemblage.id!,
+      assemblage_id: widget.assemblage.ass_uuid!,
       password: _emailController.text.split('@')[0],
     );
 

@@ -3,32 +3,32 @@ import 'dart:convert';
 // ignore_for_file: non_constant_identifier_names
 
 class PackageTypeModel {
-  String? id;
-  String? package_name;
+  String? tip_pac_uuid;
+  String? tip_pac_nome;
 
   PackageTypeModel({
-    this.id,
-    this.package_name,
+    this.tip_pac_uuid,
+    this.tip_pac_nome,
   });
 
   PackageTypeModel copyWith({
-    String? id,
-    String? package_name,
+    String? tip_pac_uuid,
+    String? tip_pac_nome,
   }) {
     return PackageTypeModel(
-      id: id ?? this.id,
-      package_name: package_name ?? this.package_name,
+      tip_pac_uuid: tip_pac_uuid ?? this.tip_pac_uuid,
+      tip_pac_nome: tip_pac_nome ?? this.tip_pac_nome,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (id != null) {
-      result.addAll({'id': id});
+    if (tip_pac_uuid != null) {
+      result.addAll({'tip_pac_uuid': tip_pac_uuid});
     }
-    if (package_name != null) {
-      result.addAll({'package_name': package_name});
+    if (tip_pac_nome != null) {
+      result.addAll({'tip_pac_nome': tip_pac_nome});
     }
 
     return result;
@@ -36,8 +36,8 @@ class PackageTypeModel {
 
   factory PackageTypeModel.fromMap(Map<String, dynamic> map) {
     return PackageTypeModel(
-      id: map['id'],
-      package_name: map['package_name'],
+      tip_pac_uuid: map['tip_pac_uuid'],
+      tip_pac_nome: map['tip_pac_nome'],
     );
   }
 
@@ -47,17 +47,18 @@ class PackageTypeModel {
       PackageTypeModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'PackageTypeModel(id: $id, package_name: $package_name)';
+  String toString() =>
+      'PackageTypeModel(tip_pac_uuid: $tip_pac_uuid, tip_pac_nome: $tip_pac_nome)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is PackageTypeModel &&
-        other.id == id &&
-        other.package_name == package_name;
+        other.tip_pac_uuid == tip_pac_uuid &&
+        other.tip_pac_nome == tip_pac_nome;
   }
 
   @override
-  int get hashCode => id.hashCode ^ package_name.hashCode;
+  int get hashCode => tip_pac_uuid.hashCode ^ tip_pac_nome.hashCode;
 }

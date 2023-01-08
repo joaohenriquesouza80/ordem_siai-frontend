@@ -11,7 +11,7 @@ class UsersListItemTableWidget {
   }) {
     //return Text(user.toJson());
     return TableRow(
-      key: ValueKey(user.id),
+      key: ValueKey(user.usu_uuid),
       children: [
         TableCell(
           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -22,7 +22,7 @@ class UsersListItemTableWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: ImageBoxCachedWidget(
-                imageUrl: user.UserProfile?.user_avatar_url,
+                imageUrl: user.usu_foto,
               ),
             ),
           ),
@@ -36,7 +36,7 @@ class UsersListItemTableWidget {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  user.UserProfile?.name ?? 'Não Informado',
+                  user.usu_nome ?? 'Não Informado',
                   style: GoogleFonts.notoSans(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
@@ -46,7 +46,7 @@ class UsersListItemTableWidget {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  '${user.email}',
+                  '${user.usu_email}',
                   style: GoogleFonts.notoSans(
                       fontWeight: FontWeight.normal,
                       fontSize: 12,
@@ -65,7 +65,7 @@ class UsersListItemTableWidget {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  user.UserProfile?.order?.name ?? 'Não Informado',
+                  user.assembleia?.ordem?.ord_name ?? 'Não Informado',
                   style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
                     fontSize: 14,
@@ -76,7 +76,7 @@ class UsersListItemTableWidget {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  user.UserProfile?.assemblage?.name ?? ' ',
+                  user.assembleia?.ass_nome ?? ' ',
                   style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
                     fontSize: 12,

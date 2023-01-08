@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:ordem_siai/src/features/assemblages/models/assemblage_mode.dart';
@@ -6,6 +8,7 @@ import 'package:ordem_siai/src/features/packages/models/package_model.dart';
 import 'package:ordem_siai/src/features/packages/models/package_type_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/routes/app_routes_names.dart';
 import '../../../shared/utils/display_dialog.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../users/models/users_models.dart';
@@ -18,7 +21,7 @@ import '../providers/packages_types_provider.dart';
 
 class PackagesController {
   final BuildContext _context;
-  final PageController pageController;
+  final PageController? pageController;
 
   static PackageModel packageDetail = PackageModel();
 
@@ -28,11 +31,25 @@ class PackagesController {
   );
 
   handleAddNewPackage() {
-    pageController.jumpToPage(6);
+    if (pageController != null) {
+      pageController!.jumpToPage(6);
+    } else {
+      Navigator.pushReplacementNamed(
+        _context,
+        AppRoutesNames.INSERT_PACKAGE,
+      );
+    }
   }
 
   handleCancelNewPackage() {
-    pageController.jumpToPage(1);
+    if (pageController != null) {
+      pageController!.jumpToPage(1);
+    } else {
+      Navigator.pushReplacementNamed(
+        _context,
+        AppRoutesNames.PACKAGES,
+      );
+    }
   }
 
   handleInsertNewUser(InsertUseAndProfileModel user) async {
@@ -85,15 +102,23 @@ class PackagesController {
         createdUser: authUser,
         packageUsers: checkedUsers.map(
           (e) {
-            int i = listUsers.indexWhere((e2) => e2.id == e.id);
+            int i = listUsers.indexWhere((e2) => e2.usu_uuid == e.usu_uuid);
             return PackageUsersModel(
-              user: listUsers[i],
+              usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario:
+                  listUsers[i],
             );
           },
         ).toList(),
       );
 
-      pageController.jumpToPage(1);
+      if (pageController != null) {
+        pageController!.jumpToPage(1);
+      } else {
+        Navigator.pushReplacementNamed(
+          _context,
+          AppRoutesNames.PACKAGES,
+        );
+      }
     } catch (e) {
       DisplayDialog.showDialogAsync(
         _context,
@@ -131,7 +156,8 @@ class PackagesController {
     UsersModel user =
         await usersProvider.getUser(authProvider.authUser!.user.id!);
 
-    await assemblagesProvider.loadAllAssemblages(user.UserProfile!.order!.id!);
+    await assemblagesProvider
+        .loadAllAssemblages(user.assembleia!.ordem!.ord_uuid!);
   }
 
   Future<void> loadAllPackagesTypes() async {
@@ -154,7 +180,14 @@ class PackagesController {
 
   void handlePackageDetail(PackageModel? package) {
     packageDetail = package ?? PackageModel();
-    pageController.jumpToPage(7);
+    if (pageController != null) {
+      pageController!.jumpToPage(7);
+    } else {
+      Navigator.pushReplacementNamed(
+        _context,
+        AppRoutesNames.DETAIL_PACKAGE,
+      );
+    }
   }
 
   Future<UsersModel?> getAuthenticateUser() async {
@@ -190,17 +223,18 @@ class PackagesController {
   }
 
   Future<bool> canUpdatePackageStatus() async {
-    UsersModel? authUser = await getAuthenticateUser();
+    return true;
+
+    /*UsersModel? authUser = await getAuthenticateUser();
 
     //MOCK
     //String value = authUser!.email!.split('@')[0];
     //return (value.contains('0'));
 
-    if ((authUser!.UserProfile == null) ||
-        (authUser.UserProfile!.assemblage != null)) {
+    if ((authUser!.assembleia != null)) {
       return false;
     }
-    return true;
+    return true;*/
   }
 
   updatePackageStatus(PackageModel packageModel) async {
@@ -237,6 +271,27 @@ class PackagesController {
       DisplayDialog.showDialogAsync(
         _context,
         "Erro na Atualização na Presença do Usuário",
+        e.toString(),
+        FeatherIcons.frown,
+      );
+    }
+  }
+
+  loginUser(String credentials) async {
+    AuthProvider authProvider = Provider.of(
+      _context,
+      listen: false,
+    );
+
+    try {
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      List<String> decoded = stringToBase64.decode(credentials).split(':');
+
+      await authProvider.login(decoded[0].trim(), decoded[1]);
+    } catch (e) {
+      DisplayDialog.showDialogAsync(
+        _context,
+        "Erro na Autenticação",
         e.toString(),
         FeatherIcons.frown,
       );

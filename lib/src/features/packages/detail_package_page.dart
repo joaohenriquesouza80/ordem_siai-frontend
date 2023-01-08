@@ -15,7 +15,7 @@ import 'controllers/packages_controller.dart';
 import 'widgets/detail_package_user_list_widget.dart';
 
 class DetailPackagePage extends StatefulWidget {
-  final PageController pageController;
+  final PageController? pageController;
 
   const DetailPackagePage({
     super.key,
@@ -62,8 +62,8 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
       return;
     }
 
-    bool hasAny =
-        _packageDetail.package_users!.any((e) => e.is_presence != null);
+    bool hasAny = _packageDetail.rel_pacote_usuario!
+        .any((e) => e.rel_pac_usu_presenca != null);
     if (hasAny) {
       await DisplayDialog.showDialogAsync(
         context,
@@ -78,20 +78,20 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
 
     switch (index) {
       case 0:
-        _packageDetail.status = 'approved';
+        _packageDetail.pac_status = 'approved';
         break;
       case 1:
-        _packageDetail.status = 'unapproved';
+        _packageDetail.pac_status = 'unapproved';
         break;
       default:
-        _packageDetail.status = 'waiting';
+        _packageDetail.pac_status = 'waiting';
     }
 
-    _packageDetail.approve_user = null;
-    _packageDetail.approve_date = null;
+    _packageDetail.usuario_pacote_usu_id_aprovacao_fkTousuario = null;
+    _packageDetail.pac_dt_aprovacao = null;
     if (authUser != null) {
-      _packageDetail.approve_user = authUser;
-      _packageDetail.approve_date = DateTime.now();
+      _packageDetail.usuario_pacote_usu_id_aprovacao_fkTousuario = authUser;
+      _packageDetail.pac_dt_aprovacao = DateTime.now();
     }
 
     setState(() {});
@@ -121,13 +121,13 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _setTitleWidget("Data do Evento:"),
-                      _packageDetail.event_date_time != null
+                      _packageDetail.pac_dt_evento != null
                           ? Text(
                               DateFormat(
                                 'dd/MM/yyyy HH:mm',
                                 'pt_Br',
                               ).format(
-                                _packageDetail.event_date_time!,
+                                _packageDetail.pac_dt_evento!,
                               ),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
@@ -163,8 +163,8 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                             minWidth: 80.0,
                           ),
                           isSelected: [
-                            _packageDetail.status == 'approved',
-                            _packageDetail.status == 'unapproved'
+                            _packageDetail.pac_status == 'approved',
+                            _packageDetail.pac_status == 'unapproved'
                           ],
                           children: _getPossibleStatus(),
                         ),
@@ -174,7 +174,9 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _packageDetail.approve_user != null
+                      _packageDetail
+                                  .usuario_pacote_usu_id_aprovacao_fkTousuario !=
+                              null
                           ? Text(
                               _getStatusDescription(_packageDetail),
                               style: GoogleFonts.poppins(
@@ -183,13 +185,13 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                                   color: AppColors.myBlack),
                             )
                           : Container(),
-                      _packageDetail.approve_date != null
+                      _packageDetail.pac_dt_aprovacao != null
                           ? Text(
                               'Em: ${DateFormat(
                                 'dd/MM/yyyy HH:mm:ss',
                                 'pt_Br',
                               ).format(
-                                _packageDetail.approve_date!,
+                                _packageDetail.pac_dt_aprovacao!,
                               )}',
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
@@ -207,9 +209,9 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _setTitleWidget("Ordem:"),
-                      _packageDetail.assemblage?.order != null
+                      _packageDetail.assembleia?.ordem != null
                           ? Text(
-                              _packageDetail.assemblage!.order!.name!,
+                              _packageDetail.assembleia!.ordem!.ord_name!,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 14,
@@ -223,9 +225,9 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _setTitleWidget("Assembleia:"),
-                      _packageDetail.assemblage != null
+                      _packageDetail.assembleia != null
                           ? Text(
-                              _packageDetail.assemblage!.name!,
+                              _packageDetail.assembleia!.ass_nome!,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 14,
@@ -241,12 +243,13 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _setTitleWidget("Criado por:"),
-                  _packageDetail.creator_user != null
+                  _packageDetail.usuario_pacote_usu_id_criacao_fkTousuario !=
+                          null
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${_packageDetail.creator_user!.UserProfile!.name!} (${_packageDetail.creator_user!.email!})",
+                              "${_packageDetail.usuario_pacote_usu_id_criacao_fkTousuario!.usu_nome} (${_packageDetail.usuario_pacote_usu_id_criacao_fkTousuario!.usu_email})",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 14,
@@ -257,7 +260,7 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                                 'dd/MM/yyyy HH:mm:ss',
                                 'pt_Br',
                               ).format(
-                                _packageDetail.created_at!,
+                                _packageDetail.pac_dt_criacao!,
                               )}',
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.normal,
@@ -277,9 +280,9 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                   _setTitleWidget('Presenças dos Usuários'),
                   SizedBox(
                     //width: 500,
-                    child: _packageDetail.package_users != null
+                    child: _packageDetail.rel_pacote_usuario != null
                         ? Wrap(
-                            children: _packageDetail.package_users!
+                            children: _packageDetail.rel_pacote_usuario!
                                 .map(
                                   (e) => DetailPackageUserListWidget(
                                     item: e,
@@ -318,7 +321,7 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                 ),
               ),
               const SizedBox(width: 20),
-              SizedBox(
+              /*SizedBox(
                 height: 30,
                 width: 150,
                 child: ButtonWidget.needColor(
@@ -328,7 +331,7 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
                   fontColor: Colors.white,
                   onTap: () => {},
                 ),
-              )
+              )*/
             ],
           ),
         ),
@@ -361,11 +364,13 @@ class _DetailPackagePageState extends State<DetailPackagePage> {
   }
 
   String _getStatusDescription(PackageModel package) {
-    if (package.status == 'approved') {
-      return 'Aprovado por: ${package.approve_user!.UserProfile!.name!} (${package.approve_user!.email!})';
-    }
-    if (package.status == 'unapproved') {
-      return 'Reprovado por: ${package.approve_user!.UserProfile!.name!} (${package.approve_user!.email!})';
+    if (package.usuario_pacote_usu_id_aprovacao_fkTousuario != null) {
+      if (package.pac_status == 'approved') {
+        return 'Aprovado por: ${package.usuario_pacote_usu_id_aprovacao_fkTousuario!.usu_nome} (${package.usuario_pacote_usu_id_aprovacao_fkTousuario!.usu_email})';
+      }
+      if (package.pac_status == 'unapproved') {
+        return 'Reprovado por: ${package.usuario_pacote_usu_id_aprovacao_fkTousuario!.usu_nome} (${package.usuario_pacote_usu_id_aprovacao_fkTousuario!.usu_email})';
+      }
     }
     return '';
   }

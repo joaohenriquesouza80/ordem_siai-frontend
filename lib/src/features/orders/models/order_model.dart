@@ -1,32 +1,34 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 class OrderModel {
-  String? id;
-  String? name;
+  String? ord_uuid;
+  String? ord_name;
 
   OrderModel({
-    this.id,
-    this.name,
+    this.ord_uuid,
+    this.ord_name,
   });
 
   OrderModel copyWith({
-    String? id,
-    String? name,
+    String? ord_uuid,
+    String? ord_name,
   }) {
     return OrderModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
+      ord_uuid: ord_uuid ?? this.ord_uuid,
+      ord_name: ord_name ?? this.ord_name,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (id != null) {
-      result.addAll({'id': id});
+    if (ord_uuid != null) {
+      result.addAll({'ord_uuid': ord_uuid});
     }
-    if (name != null) {
-      result.addAll({'name': name});
+    if (ord_name != null) {
+      result.addAll({'ord_name': ord_name});
     }
 
     return result;
@@ -34,8 +36,8 @@ class OrderModel {
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      id: map['id'],
-      name: map['name'],
+      ord_uuid: map['ord_uuid'],
+      ord_name: map['ord_name'],
     );
   }
 
@@ -45,15 +47,17 @@ class OrderModel {
       OrderModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'OrderModel(id: $id, name: $name)';
+  String toString() => 'OrderModel(ord_uuid: $ord_uuid, ord_name: $ord_name)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is OrderModel && other.id == id && other.name == name;
+    return other is OrderModel &&
+        other.ord_uuid == ord_uuid &&
+        other.ord_name == ord_name;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode;
+  int get hashCode => ord_uuid.hashCode ^ ord_name.hashCode;
 }

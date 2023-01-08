@@ -35,8 +35,8 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: ImageBoxCachedWidget(
-                    imageUrl: widget.user.UserProfile?.user_avatar_url,
-                    dynamicStringToAvatar: widget.user.id,
+                    imageUrl: widget.user.usu_foto,
+                    dynamicStringToAvatar: widget.user.usu_uuid,
                   ),
                 ),
               ),
@@ -47,7 +47,7 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.user.UserProfile?.name ?? 'Não Informado',
+                      widget.user.usu_nome ?? 'Não Informado',
                       style: GoogleFonts.notoSans(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
@@ -57,7 +57,7 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      '${widget.user.email}',
+                      '${widget.user.usu_email}',
                       style: GoogleFonts.notoSans(
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -73,7 +73,8 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.user.UserProfile?.order?.name ?? 'Não Informado',
+                      widget.user.assembleia?.ordem?.ord_name ??
+                          'Não Informado',
                       style: GoogleFonts.notoSans(
                         fontWeight: FontWeight.normal,
                         fontSize: 14,
@@ -84,7 +85,7 @@ class _UsersListItemWidgetState extends State<UsersListItemWidget> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.user.UserProfile?.assemblage?.name ?? ' ',
+                      widget.user.assembleia?.ass_nome ?? ' ',
                       style: GoogleFonts.notoSans(
                         fontWeight: FontWeight.normal,
                         fontSize: 12,

@@ -45,12 +45,13 @@ class PackagesRepositoryImpl implements PackagesRepository {
     final f = DateFormat('yyyy-MM-dd hh:mm:ss');
 
     InsertPackageModel insertPackageModel = InsertPackageModel(
-      package_type_id: package.package_type!.id!,
-      event_date_time: f.format(package.event_date_time!),
-      assemblage_id: package.assemblage!.id!,
-      package_users: package.package_users!.map(
+      package_type_id: package.tipo_pacote!.tip_pac_uuid!,
+      event_date_time: f.format(package.pac_dt_evento!),
+      assemblage_id: package.assembleia!.ass_uuid!,
+      package_users: package.rel_pacote_usuario!.map(
         (e) {
-          return e.user!.id!;
+          return e
+              .usuario_rel_pacote_usuario_usu_id_usuario_fkTousuario!.usu_uuid!;
         },
       ).toList(),
     );
@@ -71,14 +72,15 @@ class PackagesRepositoryImpl implements PackagesRepository {
 
   @override
   Future<void> updatePackageStatus(PackageModel package) async {
-    var method = "/packages/${package.id}/status";
+    var method = "/packages/${package.pac_uuid}/status";
 
     final f = DateFormat('yyyy-MM-dd hh:mm:ss');
 
     UpdatePackageStatusDTO updatePackageStatusDTO = UpdatePackageStatusDTO(
-      status: package.status!,
-      approve_user_id: package.approve_user!.id!,
-      approve_date: f.format(package.approve_date!),
+      status: package.pac_status!,
+      approve_user_id:
+          package.usuario_pacote_usu_id_aprovacao_fkTousuario!.usu_uuid!,
+      approve_date: f.format(package.pac_dt_aprovacao!),
     );
 
     final ClientHttpResponseModel responseHttp = await clientHttpProvider.patch(
@@ -98,15 +100,16 @@ class PackagesRepositoryImpl implements PackagesRepository {
   @override
   Future<void> updatePackageUserPresenceStatus(
       PackageUsersModel packageUser) async {
-    var method = "/packages/${packageUser.id}/presence_status";
+    var method = "/packages/${packageUser.rel_pac_usu_uuid}/presence_status";
 
     final f = DateFormat('yyyy-MM-dd hh:mm:ss');
 
     UpdatePackageUserPresenceStatusDTO updatePackageUserPresenceStatusDTO =
         UpdatePackageUserPresenceStatusDTO(
-      is_presence: packageUser.is_presence!,
-      presence_user_id: packageUser.presence_user!.id!,
-      presence_date: f.format(packageUser.presence_date!),
+      is_presence: packageUser.rel_pac_usu_presenca!,
+      presence_user_id: packageUser
+          .usuario_rel_pacote_usuario_usu_id_presenca_fkTousuario!.usu_uuid!,
+      presence_date: f.format(packageUser.rel_pac_usu_dt_presenca!),
     );
 
     final ClientHttpResponseModel responseHttp = await clientHttpProvider.patch(

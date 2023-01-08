@@ -16,7 +16,7 @@ class PackagesRepositoryFake implements PackagesRepository {
   Future<List<PackageModel>> getAllPackages() async {
     List<PackageModel> packages = RepositoriesMocks.getMockPackages(0);
     packages.sort(
-      (a, b) => b.event_date_time!.compareTo(a.event_date_time!),
+      (a, b) => b.pac_dt_evento!.compareTo(a.pac_dt_evento!),
     );
 
     List<UsersModel> usersModel = RepositoriesMocks.getMockFullUsers();
@@ -24,7 +24,7 @@ class PackagesRepositoryFake implements PackagesRepository {
     String userId = authProvider.authUser!.user.id!;
 
     final index = usersModel.indexWhere(
-      (u) => u.id == userId,
+      (u) => u.usu_uuid == userId,
     );
 
     if (index < 0) {
@@ -33,13 +33,14 @@ class PackagesRepositoryFake implements PackagesRepository {
 
     UsersModel user = usersModel[index];
 
-    if (user.UserProfile?.assemblage == null) {
+    if (user.assembleia == null) {
       return packages
-          .where((e) => e.assemblage?.order?.id == user.UserProfile?.order?.id)
+          .where((e) =>
+              e.assembleia?.ordem?.ord_uuid == user.assembleia?.ordem?.ord_uuid)
           .toList();
     }
     return packages
-        .where((e) => e.assemblage?.id == user.UserProfile?.assemblage?.id)
+        .where((e) => e.assembleia?.ass_uuid == user.assembleia?.ass_uuid)
         .toList();
   }
 

@@ -22,14 +22,28 @@ class PackagesProvider with ChangeNotifier {
     );
   }
 
+  bool isLoading = true;
+  bool isError = false;
+  String errorMessage = '';
+
   List<PackageModel> _packages = [];
   List<PackageModel> get packages => [..._packages];
 
   Future<void> loadAllPackages() async {
     _packages = [];
 
-    _packages = await packagesRepository.getAllPackages();
+    try {
+      errorMessage = '';
+      isError = false;
+      isLoading = true;
+      notifyListeners();
+      _packages = await packagesRepository.getAllPackages();
+    } catch (e) {
+      errorMessage = e.toString();
+      isError = true;
+    }
 
+    isLoading = false;
     notifyListeners();
   }
 
@@ -42,12 +56,12 @@ class PackagesProvider with ChangeNotifier {
   }) async {
     await packagesRepository.insertPackage(
       PackageModel(
-        event_date_time: eventDateTime,
-        package_type: packageType,
-        assemblage: assemblage,
-        package_users: packageUsers,
-        creator_user: createdUser,
-        created_at: DateTime.now(),
+        pac_dt_evento: eventDateTime,
+        tipo_pacote: packageType,
+        assembleia: assemblage,
+        rel_pacote_usuario: packageUsers,
+        usuario_pacote_usu_id_criacao_fkTousuario: createdUser,
+        pac_dt_criacao: DateTime.now(),
       ),
     );
 

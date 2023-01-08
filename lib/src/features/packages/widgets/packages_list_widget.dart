@@ -21,17 +21,17 @@ class PackagesListWidget extends StatefulWidget {
 class _PackagesListWidgetState extends State<PackagesListWidget> {
   _handleSelectStatus(int index, String packageId) {
     for (int i = 0; i < widget.packages.length; i++) {
-      if (widget.packages[i].id == packageId) {
+      if (widget.packages[i].pac_uuid == packageId) {
         setState(() {
           switch (index) {
             case 0:
-              widget.packages[i].status = 'approved';
+              widget.packages[i].pac_status = 'approved';
               break;
             case 1:
-              widget.packages[i].status = 'unapproved';
+              widget.packages[i].pac_status = 'unapproved';
               break;
             default:
-              widget.packages[i].status = 'waiting';
+              widget.packages[i].pac_status = 'waiting';
           }
         });
       }

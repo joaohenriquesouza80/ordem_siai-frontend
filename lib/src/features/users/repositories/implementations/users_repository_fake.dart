@@ -21,14 +21,12 @@ class UsersRepositoryFake implements UsersRepository {
   Future<List<UsersModel>> getUsers() async {
     List<UsersModel> usersModel = RepositoriesMocks.getMockFullUsers();
     usersModel.sort(
-      (a, b) => a.UserProfile!.name!
-          .toUpperCase()
-          .compareTo(b.UserProfile!.name!.toUpperCase()),
+      (a, b) => a.usu_nome!.toUpperCase().compareTo(b.usu_nome!.toUpperCase()),
     );
     String userId = authProvider.authUser!.user.id!;
 
     final index = usersModel.indexWhere(
-      (u) => u.id == userId,
+      (u) => u.usu_uuid == userId,
     );
 
     if (index < 0) {
@@ -36,17 +34,18 @@ class UsersRepositoryFake implements UsersRepository {
     }
 
     UsersModel user = usersModel[index];
-    if (user.UserProfile?.assemblage == null) {
+    if (user.assembleia == null) {
       return usersModel
-          .where((e) => e.UserProfile?.order?.id == user.UserProfile?.order?.id)
+          .where((e) =>
+              e.assembleia?.ordem?.ord_uuid == user.assembleia?.ordem?.ord_uuid)
           .toList();
     }
     return usersModel
         .where((e) =>
-            (e.UserProfile?.assemblage?.id ==
-                user.UserProfile?.assemblage?.id) ||
-            ((e.UserProfile?.assemblage == null) &&
-                (e.UserProfile?.order?.id == user.UserProfile?.order?.id)))
+            (e.assembleia?.ass_uuid == user.assembleia?.ass_uuid) ||
+            ((e.assembleia == null) &&
+                (e.assembleia?.ordem?.ord_uuid ==
+                    user.assembleia?.ordem?.ord_uuid)))
         .toList();
   }
 
@@ -57,7 +56,7 @@ class UsersRepositoryFake implements UsersRepository {
     UserModel authenticatedUser = authProvider.authUser!.user;
 
     final index = usersModel.indexWhere(
-      (u) => u.email == useAndProfileModel.email,
+      (u) => u.usu_email == useAndProfileModel.email,
     );
 
     if (index >= 0) {
@@ -84,7 +83,7 @@ class UsersRepositoryFake implements UsersRepository {
     List<UsersModel> usersModel = RepositoriesMocks.getMockFullUsers();
 
     final index = usersModel.indexWhere(
-      (u) => u.id == userId,
+      (u) => u.usu_uuid == userId,
     );
 
     if (index >= 0) {

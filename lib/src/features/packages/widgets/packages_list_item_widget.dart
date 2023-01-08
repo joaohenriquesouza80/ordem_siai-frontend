@@ -90,7 +90,7 @@ class PackagesListItemWidget {
     double fontSize = 12,
   }) {
     return TableRow(
-      key: ValueKey(package.id),
+      key: ValueKey(package.pac_uuid),
       children: [
         TableCell(
           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -104,7 +104,7 @@ class PackagesListItemWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    package.id!.substring(package.id!.length - 6),
+                    package.pac_uuid!.substring(package.pac_uuid!.length - 6),
                     style: GoogleFonts.notoSans(
                         fontWeight: FontWeight.normal,
                         fontSize: fontSize,
@@ -131,7 +131,7 @@ class PackagesListItemWidget {
             child: FittedBox(
               fit: boxFit,
               child: Text(
-                package.package_type!.package_name!,
+                package.tipo_pacote!.tip_pac_nome!,
                 style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
                     fontSize: fontSize,
@@ -153,7 +153,7 @@ class PackagesListItemWidget {
                   'dd/MM/yyyy HH:mm',
                   'pt_Br',
                 ).format(
-                  package.event_date_time!.toLocal(),
+                  package.pac_dt_evento!.toLocal(),
                 ),
                 style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
@@ -172,7 +172,7 @@ class PackagesListItemWidget {
             child: FittedBox(
               fit: boxFit,
               child: Text(
-                package.assemblage!.order!.name!,
+                package.assembleia!.ordem!.ord_name!,
                 style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
                     fontSize: fontSize,
@@ -190,7 +190,7 @@ class PackagesListItemWidget {
             child: FittedBox(
               fit: boxFit,
               child: Text(
-                package.assemblage!.name!,
+                package.assembleia!.ass_nome!,
                 style: GoogleFonts.notoSans(
                     fontWeight: FontWeight.normal,
                     fontSize: fontSize,
@@ -224,8 +224,8 @@ class PackagesListItemWidget {
                     minWidth: 80.0,
                   ),
                   isSelected: [
-                    package.status == 'approved',
-                    package.status == 'unapproved'
+                    package.pac_status == 'approved',
+                    package.pac_status == 'unapproved'
                   ],
                   children: getPossibleStatus(),
                 ),

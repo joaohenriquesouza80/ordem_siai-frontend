@@ -5,6 +5,7 @@ class AppRoutesNames {
   static const AUTH_HOME = '/auth';
   static const HOME = '/home';
   static const USERS = '/users';
-  static const PACKAGES = '/packages';
-  static const INSERT_PACKAGE = 'packages/insert';
+  static const PACKAGES = '/';
+  static const INSERT_PACKAGE = '/packages/insert';
+  static const DETAIL_PACKAGE = '/packages/detail';
 }
